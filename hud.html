@@ -791,6 +791,83 @@
       </div>
     </section>
 
+    <!-- SECTION: VO2 MAX COLLAPSE & RECOVERY TRAJECTORY -->
+    <section class="hud-card" id="vo2max">
+      <div class="section-header">
+        <span class="section-icon">📉</span>
+        <h2 class="section-title">VO2 Max Collapse & Recovery</h2>
+        <span class="section-pill">APPLE &times; GARMIN DATA</span>
+      </div>
+
+      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 14px;">
+        Why your estimated VO2 max plunged by <strong>-20.5% (45.9 &rarr; 36.5 mL/kg/min)</strong> in parallel with skeletal muscle loss:
+      </p>
+
+      <!-- SVG VO2 Max Trajectory Curve -->
+      <div style="background: rgba(0,0,0,0.45); padding: 14px 10px; border-radius: 12px; border: 1px solid rgba(0,243,255,0.18); margin-bottom: 14px;">
+        <svg viewBox="0 0 520 220" width="100%" height="auto" style="overflow: visible;">
+          <defs>
+            <linearGradient id="vo2DropGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ff0055" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#ff0055" stop-opacity="0.0"/>
+            </linearGradient>
+            <linearGradient id="vo2RecoveryGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#00ff66" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#00ff66" stop-opacity="0.0"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Grid Lines -->
+          <line x1="45" y1="35" x2="495" y2="35" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
+          <line x1="45" y1="95" x2="495" y2="95" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
+          <line x1="45" y1="155" x2="495" y2="155" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
+
+          <!-- Axis Labels -->
+          <text x="40" y="39" fill="#94a3b8" font-size="10" font-family="JetBrains Mono" text-anchor="end">46.0</text>
+          <text x="40" y="99" fill="#94a3b8" font-size="10" font-family="JetBrains Mono" text-anchor="end">41.0</text>
+          <text x="40" y="159" fill="#94a3b8" font-size="10" font-family="JetBrains Mono" text-anchor="end">36.0</text>
+
+          <!-- Historical Drop Area -->
+          <path d="M 55 36 L 115 38 L 175 58 L 235 106 L 295 103 L 355 125 L 415 152 L 415 185 L 55 185 Z" fill="url(#vo2DropGrad)"/>
+          
+          <!-- Historical Drop Curve -->
+          <path d="M 55 36 L 115 38 L 175 58 L 235 106 L 295 103 L 355 125 L 415 152" fill="none" stroke="#ff0055" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- Projected Recovery Curve -->
+          <path d="M 415 152 Q 455 105 495 50" fill="none" stroke="#00ff66" stroke-width="2.5" stroke-dasharray="6,4"/>
+
+          <!-- Peak Point -->
+          <circle cx="55" cy="36" r="5" fill="#00f3ff" stroke="#fff" stroke-width="2"/>
+          <text x="55" y="24" fill="#00f3ff" font-size="10" font-family="Chakra Petch" font-weight="800" text-anchor="middle">PEAK 45.9</text>
+
+          <!-- Current Dip Point -->
+          <circle cx="415" cy="152" r="5" fill="#ff0055" stroke="#fff" stroke-width="2"/>
+          <text x="415" y="174" fill="#ff0055" font-size="10" font-family="Chakra Petch" font-weight="800" text-anchor="middle">DIP 36.5 (-20%)</text>
+
+          <!-- Target Recovery Point -->
+          <circle cx="495" cy="50" r="5" fill="#00ff66" stroke="#fff" stroke-width="2"/>
+          <text x="495" y="38" fill="#00ff66" font-size="10" font-family="Chakra Petch" font-weight="800" text-anchor="end">REBUILD 44+</text>
+
+          <!-- Dates Bottom Axis -->
+          <text x="55" y="205" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Oct '25</text>
+          <text x="175" y="205" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Nov '25</text>
+          <text x="295" y="205" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Mar '26</text>
+          <text x="415" y="205" fill="#ff0055" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Jun–Oct '26</text>
+          <text x="495" y="205" fill="#00ff66" font-size="9" font-family="JetBrains Mono" text-anchor="end">TARGET</text>
+        </svg>
+      </div>
+
+      <!-- Diagnostic Card on the Drop -->
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="background: rgba(255, 0, 85, 0.05); border-left: 3px solid var(--neon-pink); padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 0.82rem; color: var(--text-dim);">
+          <strong style="color: #fff;">Why did it fall?</strong> Apple Watch estimates VO2 max from your <em>heart-rate-to-walking-pace slope</em>. When you lost 4.1 lb of leg muscle and stacked vasodilators, stroke volume decreased, making your heart beat at 86+ bpm for simple walks. The algorithm interpreted this high heart rate as a collapse in cardiorespiratory fitness.
+        </div>
+        <div style="background: rgba(0, 255, 102, 0.05); border-left: 3px solid var(--neon-green); padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 0.82rem; color: var(--text-dim);">
+          <strong style="color: #fff;">The Fix:</strong> Restoring cardiac ATP with <strong>Ubiquinol</strong> and rebuilding leg mass pushes stroke volume back up, naturally sending your VO2 max back above 42+.
+        </div>
+      </div>
+    </section>
+
     <!-- SECTION 3: DAILY BIO-REGIMEN & MINERAL UPGRADE -->
     <section class="hud-card" id="regimen">
       <div class="section-header">
@@ -895,6 +972,9 @@
     </button>
     <button class="nav-btn" onclick="jumpTo('symptoms')">
       <span>⚡</span>Reveal
+    </button>
+    <button class="nav-btn" onclick="jumpTo('vo2max')">
+      <span>📉</span>VO2 Max
     </button>
     <button class="nav-btn" onclick="jumpTo('training')">
       <span>🏋️</span>Strength
