@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>CYBERNETIC BIO-CORE // QUANTIFIED SELF PROTOCOL</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,500;0,700;0,900;1,700&family=JetBrains+Mono:wght@300;400;600;800&family=Space+Grotesk:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  
+  <!-- WebGL & Animation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #030712;
+      --card-bg: rgba(9, 18, 36, 0.82);
+      --card-border: rgba(0, 243, 255, 0.2);
+      --neon-cyan: #00f3ff;
+      --neon-pink: #ff0055;
+      --neon-amber: #ffaa00;
+      --neon-green: #00ff66;
+      --neon-purple: #a855f7;
+      --text-main: #f1f5f9;
+      --text-dim: #94a3b8;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-display: 'Chakra Petch', sans-serif;
+      --font-body: 'Space Grotesk', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      line-height: 1.5;
+      background-image: 
+        radial-gradient(circle at 50% 15%, rgba(0, 243, 255, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 85% 75%, rgba(255, 0, 85, 0.07) 0%, transparent 60%),
+        linear-gradient(rgba(0, 243, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 243, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+    }
+
+    /* Fixed ThreeJS Canvas */
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.85;
+    }
+
+    /* Scanline overlay */
+    .scanlines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.28) 50%);
+      background-size: 100% 4px;
+      opacity: 0.55;
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(3, 7, 18, 0.88);
+      border-bottom: 1px solid rgba(0, 243, 255, 0.25);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      font-weight: 900;
+      letter-spacing: 2px;
+      font-size: 1.05rem;
+      color: #fff;
+    }
+
+    .brand-glitch {
+      color: var(--neon-cyan);
+      text-shadow: 0 0 12px rgba(0, 243, 255, 0.8);
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      background: var(--neon-green);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--neon-green);
+      animation: pulse 1.6s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.35; }
+    }
+
+    .header-badges {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .net-pill {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      background: rgba(0, 243, 255, 0.1);
+      border: 1px solid var(--neon-cyan);
+      color: var(--neon-cyan);
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    .ha-live-pill {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      background: rgba(0, 255, 102, 0.1);
+      border: 1px solid var(--neon-green);
+      color: var(--neon-green);
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    /* Container */
+    main {
+      position: relative;
+      z-index: 10;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 85px 18px 120px;
+    }
+
+    /* Hero */
+    .hero-section {
+      padding: 30px 0 20px;
+    }
+
+    .meta-tag {
+      font-family: var(--font-mono);
+      color: var(--neon-cyan);
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .meta-tag::before {
+      content: "[TELEMETRY // MULTI-SENSOR]";
+      color: var(--neon-pink);
+      font-weight: 800;
+    }
+
+    h1.hero-title {
+      font-family: var(--font-display);
+      font-size: 2.7rem;
+      font-weight: 900;
+      line-height: 1.08;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 40%, var(--neon-cyan) 80%, var(--neon-pink) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 35px rgba(0, 243, 255, 0.35);
+    }
+
+    .hero-subtitle {
+      font-size: 0.98rem;
+      color: var(--text-dim);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    /* Live Telemetry Ticker */
+    .ticker-bar {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      background: rgba(0, 243, 255, 0.06);
+      color: var(--neon-cyan);
+      padding: 7px 12px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow: hidden;
+      white-space: nowrap;
+      border-left: 3px solid var(--neon-cyan);
+    }
+
+    .ticker-content {
+      display: inline-block;
+      animation: ticker 30s linear infinite;
+    }
+
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* 3D Visualizer Mode Controller */
+    .viewport-ctrl {
+      background: rgba(0, 243, 255, 0.05);
+      border: 1px solid rgba(0, 243, 255, 0.2);
+      border-radius: 30px;
+      padding: 6px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 26px;
+    }
+
+    .vp-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .vp-btn.active {
+      background: var(--neon-cyan);
+      color: #030712;
+      font-weight: 800;
+      box-shadow: 0 0 14px rgba(0, 243, 255, 0.6);
+    }
+
+    /* Live HA Sensor Matrix Grid */
+    .sensor-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .sensor-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.45);
+    }
+
+    .sensor-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3.5px;
+      height: 100%;
+      background: var(--neon-cyan);
+    }
+
+    .sensor-card.live::before { background: var(--neon-green); }
+    .sensor-card.alert::before { background: var(--neon-pink); }
+    .sensor-card.gold::before { background: var(--neon-amber); }
+
+    .sensor-badge-source {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--text-dim);
+    }
+
+    .sensor-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .sensor-val {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      margin-top: 3px;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .sensor-unit {
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+    }
+
+    .sensor-sub {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      margin-top: 4px;
+    }
+
+    .c-green { color: var(--neon-green); }
+    .c-pink { color: var(--neon-pink); }
+    .c-cyan { color: var(--neon-cyan); }
+    .c-amber { color: var(--neon-amber); }
+
+    /* Interactive HUD Section Cards */
+    .hud-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 22px 18px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 10px 35px rgba(0,0,0,0.55);
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hud-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(135deg, transparent 50%, rgba(0, 243, 255, 0.25) 50%);
+      pointer-events: none;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+    }
+
+    .section-icon {
+      font-size: 1.35rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .section-pill {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: 0.64rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(0, 243, 255, 0.08);
+      color: var(--neon-cyan);
+      border: 1px solid rgba(0, 243, 255, 0.3);
+      font-weight: 700;
+    }
+
+    /* Dynamic Scratch Foil */
+    .scratch-container {
+      position: relative;
+      width: 100%;
+      min-height: 190px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 16px 0;
+      border: 1px dashed rgba(0, 243, 255, 0.4);
+    }
+
+    .scratch-underlay {
+      padding: 20px 18px;
+      background: linear-gradient(135deg, rgba(255, 0, 85, 0.18), rgba(0, 243, 255, 0.12));
+      color: #fff;
+    }
+
+    .scratch-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      touch-action: none;
+      cursor: crosshair;
+    }
+
+    .scratch-hint {
+      position: absolute;
+      bottom: 8px;
+      right: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--neon-cyan);
+      z-index: 3;
+      pointer-events: none;
+      background: rgba(3, 7, 18, 0.85);
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 243, 255, 0.3);
+    }
+
+    /* Training Telemetry Highlights */
+    .workout-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .workout-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+    }
+
+    .workout-row.strength {
+      border-left: 3px solid var(--neon-green);
+      background: rgba(0, 255, 102, 0.04);
+    }
+
+    .workout-icon {
+      font-size: 1.25rem;
+    }
+
+    .workout-info {
+      flex: 1;
+    }
+
+    .workout-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .workout-meta {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    .workout-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(0, 255, 102, 0.12);
+      color: var(--neon-green);
+      font-weight: 700;
+    }
+
+    /* Interactive Protocol Checklist */
+    .checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 13px 14px;
+      background: rgba(0, 243, 255, 0.03);
+      border: 1px solid rgba(0, 243, 255, 0.15);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .check-item:hover {
+      background: rgba(0, 243, 255, 0.08);
+      border-color: var(--neon-cyan);
+    }
+
+    .check-item.done {
+      border-color: var(--neon-green);
+      background: rgba(0, 255, 102, 0.05);
+    }
+
+    .cyber-check {
+      min-width: 20px;
+      height: 20px;
+      border: 1px solid var(--neon-cyan);
+      border-radius: 4px;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--neon-green);
+    }
+
+    .check-item.done .cyber-check {
+      background: var(--neon-green);
+      color: #030712;
+      border-color: var(--neon-green);
+      font-weight: 800;
+    }
+
+    .check-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .check-desc {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+      line-height: 1.35;
+    }
+
+    /* Regimen Pills */
+    .regimen-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .reg-pill {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+
+    .reg-pill.active-new {
+      border-color: var(--neon-green);
+      background: rgba(0, 255, 102, 0.06);
+    }
+
+    .reg-pill.statin {
+      border-color: var(--neon-pink);
+      background: rgba(255, 0, 85, 0.06);
+    }
+
+    .reg-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .reg-sub {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--neon-cyan);
+      margin-top: 2px;
+    }
+
+    .reg-pill.active-new .reg-sub { color: var(--neon-green); }
+    .reg-pill.statin .reg-sub { color: var(--neon-pink); }
+
+    /* Bottom Floating Nav */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: rgba(3, 7, 18, 0.88);
+      border-top: 1px solid rgba(0, 243, 255, 0.2);
+      padding: 10px 20px 22px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      text-transform: uppercase;
+    }
+
+    .nav-btn.active, .nav-btn:hover {
+      color: var(--neon-cyan);
+    }
+
+    .nav-btn span {
+      font-size: 1.15rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ThreeJS Background Rendering Layer -->
+  <div id="canvas-container"></div>
+  <div class="scanlines"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <span class="pulse-dot"></span>
+      <span class="brand-glitch">HEALTHIO // BIO-CORE</span>
+    </div>
+    <div class="header-badges">
+      <span class="ha-live-pill">HA: LIVE 74.3 KG</span>
+      <span class="net-pill">PUBLIC SYNC</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- Live Telemetry Stream Ticker -->
+    <div class="ticker-bar">
+      <span style="color: var(--neon-pink); font-weight: 800;">[STREAM]</span>
+      <div class="ticker-content">
+        HA SCALE: 74.3 KG (163.8 LB) &bull; LEAN: 61.1 KG (134.7 LB) &bull; VAT: 2.97 LB &bull; LIVER ALT: 34 U/L (RECOVERED FROM 71) &bull; LDL-C: 78 MG/DL &bull; STRATEGY: STRENGTH + ZONE 2 + UBIQUINOL &bull; STRENGTH PHASE ACTIVE &bull; 
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="overview">
+      <div class="meta-tag">QUANTIFIED SELF TELEMETRY // 2026.10</div>
+      <h1 class="hero-title">BIO-CORE<br><span style="color: var(--neon-cyan)">CYBERNETIC</span> HUD</h1>
+      <p class="hero-subtitle">
+        Unified real-time telemetry fusing <strong>7 BodySpec DEXA scans</strong>, <strong>fasting blood turnaround panels</strong>, <strong>Home Assistant smart-scale weights</strong>, and <strong>Garmin / Apple Health recovery metrics</strong>.
+      </p>
+
+      <!-- 3D Switcher Control Bar -->
+      <div class="viewport-ctrl">
+        <button class="vp-btn active" onclick="set3DMode('heart')">Cardiac Core</button>
+        <button class="vp-btn" onclick="set3DMode('anatomy')">Kinetic Wireframe</button>
+        <button class="vp-btn" onclick="set3DMode('cellular')">Mitochondria</button>
+      </div>
+
+      <!-- Live HA & Sensor Grid -->
+      <div class="sensor-grid">
+        <div class="sensor-card live">
+          <span class="sensor-badge-source">HOME ASSISTANT</span>
+          <div class="sensor-label">Live Scale Weight</div>
+          <div class="sensor-val">74.3 <span class="sensor-unit">kg</span></div>
+          <div class="sensor-sub c-green">163.8 lb &bull; Auto-Synced</div>
+        </div>
+
+        <div class="sensor-card live">
+          <span class="sensor-badge-source">HOME ASSISTANT</span>
+          <div class="sensor-label">Lean Body Mass</div>
+          <div class="sensor-val">61.1 <span class="sensor-unit">kg</span></div>
+          <div class="sensor-sub c-cyan">134.7 lb &bull; Rebuilding Phase</div>
+        </div>
+
+        <div class="sensor-card alert">
+          <span class="sensor-badge-source">DEXA SCAN</span>
+          <div class="sensor-label">Visceral Fat (VAT)</div>
+          <div class="sensor-val">2.97 <span class="sensor-unit">lb</span></div>
+          <div class="sensor-sub c-pink">1,347g &bull; Target: &lt; 1.0 lb</div>
+        </div>
+
+        <div class="sensor-card gold">
+          <span class="sensor-badge-source">LAB RESULTS</span>
+          <div class="sensor-label">Liver ALT Recovery</div>
+          <div class="sensor-val">34 <span class="sensor-unit">U/L</span></div>
+          <div class="sensor-sub c-green">&check; Normalized from 71</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: THE INTERACTIVE REVEAL (RUB-OFF FOIL) -->
+    <section class="hud-card" id="symptoms">
+      <div class="section-header">
+        <span class="section-icon">⚡</span>
+        <h2 class="section-title">Root Cause Decryption</h2>
+        <span class="section-pill">INTERACTIVE FOIL</span>
+      </div>
+
+      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 10px;">
+        Why did acute lightheadedness upon standing and cardiac fatigue happen? <strong>Rub your finger or cursor across the encrypted foil below</strong> to de-cloak the molecular cause:
+      </p>
+
+      <!-- Scratch Foil Canvas -->
+      <div class="scratch-container">
+        <div class="scratch-underlay">
+          <h3 style="font-family: var(--font-display); color: var(--neon-pink); font-size: 1.15rem; margin-bottom: 6px;">
+            MOLECULAR MECHANISM DECRYPTED
+          </h3>
+          <p style="font-size: 0.82rem; color: #fff; line-height: 1.42;">
+            <strong>1. Vasodilator Stacking:</strong> Stacking 4 systemic vasodilators (Berberine, Quercetin, Resveratrol, Magnesium) on top of rapid weight loss caused acute blood pooling in the legs upon rising.<br>
+            <strong>2. Skeletal Muscle Pump Loss:</strong> DEXA revealed a -4.1 lb drop in leg muscle, degrading mechanical venous return to the heart.<br>
+            <strong>3. Statin CoQ10 Depletion:</strong> Daily Atorvastatin blocks HMG-CoA reductase, depriving myocardial mitochondria of Ubiquinol (CoQ10) required for cardiac ATP.
+          </p>
+        </div>
+        <canvas id="scratchCanvas" class="scratch-canvas"></canvas>
+        <div class="scratch-hint">SWIPE / TOUCH TO DE-CLOAK</div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: TRAINING STATUS & THE STRENGTH SHIFT -->
+    <section class="hud-card" id="training">
+      <div class="section-header">
+        <span class="section-icon">🏋️</span>
+        <h2 class="section-title">Training Phase: Strength Pivot</h2>
+        <span class="section-pill">APPLE &times; GARMIN</span>
+      </div>
+
+      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 12px;">
+        Running was paused for weeks while pivoting exclusively into <strong>heavy strength & functional resistance</strong>. Here is why this was physiologically essential:
+      </p>
+
+      <div class="workout-feed">
+        <div class="workout-row strength">
+          <span class="workout-icon">💪</span>
+          <div class="workout-info">
+            <div class="workout-title">Heavy Compound Strength Phase</div>
+            <div class="workout-meta">Squats &bull; Deadlifts &bull; Presses &bull; Leg Hypertrophy</div>
+          </div>
+          <span class="workout-tag">ACTIVE</span>
+        </div>
+
+        <div class="workout-row">
+          <span class="workout-icon">🏃</span>
+          <div class="workout-info">
+            <div class="workout-title">Cardio Depletion Phase (Paused)</div>
+            <div class="workout-meta">Running paused to prevent catabolic lean tissue wasting</div>
+          </div>
+          <span class="workout-tag" style="background: rgba(255,255,255,0.08); color: var(--text-dim);">RESTORE</span>
+        </div>
+      </div>
+
+      <div style="font-family: var(--font-mono); font-size: 0.74rem; color: var(--neon-cyan); background: rgba(0,243,255,0.06); padding: 12px 14px; border-radius: 8px; border-left: 3px solid var(--neon-cyan); margin-top: 14px;">
+        <strong>The Bio-Mechanic Reality:</strong> Your 3-year DEXA record shows pure cardio + crash deficits dropped lean mass from <strong>119.9 lb &rarr; 109.1 lb</strong> while visceral fat stayed flat at 2.97 lb. Strength training rebuilds the GLUT4 muscle glucose sink, forcing visceral fat to be oxidized instead of muscle tissue.
+      </div>
+    </section>
+
+    <!-- SECTION 3: DAILY BIO-REGIMEN & MINERAL UPGRADE -->
+    <section class="hud-card" id="regimen">
+      <div class="section-header">
+        <span class="section-icon">💊</span>
+        <h2 class="section-title">Optimized Daily Bio-Stack</h2>
+        <span class="section-pill">PEER-REVIEWED</span>
+      </div>
+
+      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 8px;">
+        Daytime vasodilators removed; upgraded to organic amino-acid chelates and active mitochondrial cofactors:
+      </p>
+
+      <div class="regimen-grid">
+        <div class="reg-pill active-new">
+          <div class="reg-name">Ubiquinol (CoQ10)</div>
+          <div class="reg-sub">100–200 mg AM &bull; Restores Cardiac ATP</div>
+        </div>
+
+        <div class="reg-pill active-new">
+          <div class="reg-name">Evalar Mg L-Threonate</div>
+          <div class="reg-sub">Crosses BBB &bull; Deep Sleep &bull; Zero Diarrhea</div>
+        </div>
+
+        <div class="reg-pill statin">
+          <div class="reg-name">Atorvastatin</div>
+          <div class="reg-sub">Daily Rx &bull; LDL-C 78 mg/dL Target</div>
+        </div>
+
+        <div class="reg-pill">
+          <div class="reg-name">Vitamin D3 (5,000 IU)</div>
+          <div class="reg-sub">Corrects Baseline 25 ng/mL Deficit</div>
+        </div>
+
+        <div class="reg-pill">
+          <div class="reg-name">Bone-Up (MCHA + K2)</div>
+          <div class="reg-sub">Microcrystalline Hydroxyapatite + MK-7</div>
+        </div>
+
+        <div class="reg-pill" style="opacity: 0.6; border-color: rgba(255,255,255,0.15);">
+          <div class="reg-name" style="text-decoration: line-through;">Daytime Berberine Stack</div>
+          <div class="reg-sub" style="color: var(--neon-pink);">DISCONTINUED (Cleared Dizziness)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: TACTILE ACTION PROTOCOL -->
+    <section class="hud-card" id="protocol">
+      <div class="section-header">
+        <span class="section-icon">🛡️</span>
+        <h2 class="section-title">Interactive Daily Protocol</h2>
+        <span class="section-pill">TOUCH CHECKLIST</span>
+      </div>
+
+      <div class="checklist">
+        <div class="check-item done" onclick="toggleTask(this)">
+          <div class="cyber-check">&check;</div>
+          <div>
+            <div class="check-title">Removed Daytime Vasodilator Stack</div>
+            <div class="check-desc">Eliminated daytime blood pooling and postural lightheadedness.</div>
+          </div>
+        </div>
+
+        <div class="check-item" onclick="toggleTask(this)">
+          <div class="cyber-check">&check;</div>
+          <div>
+            <div class="check-title">Morning Ubiquinol (Active CoQ10 100–200mg)</div>
+            <div class="check-desc">Direct antidote to statin mitochondrial cardiac fatigue. Taken with breakfast fats.</div>
+          </div>
+        </div>
+
+        <div class="check-item" onclick="toggleTask(this)">
+          <div class="cyber-check">&check;</div>
+          <div>
+            <div class="check-title">Bedtime Evalar Magnesium L-Threonate</div>
+            <div class="check-desc">Penetrates blood-brain barrier for deep restorative sleep without morning hypotension.</div>
+          </div>
+        </div>
+
+        <div class="check-item" onclick="toggleTask(this)">
+          <div class="cyber-check">&check;</div>
+          <div>
+            <div class="check-title">16:8 Fasting Window (12:00 PM – 8:00 PM)</div>
+            <div class="check-desc">Keeps insulin suppressed for 16 hours to trigger visceral fat liquidation.</div>
+          </div>
+        </div>
+
+        <div class="check-item" onclick="toggleTask(this)">
+          <div class="cyber-check">&check;</div>
+          <div>
+            <div class="check-title">3x Weekly Compound Lifting (Leg Muscle Pump)</div>
+            <div class="check-desc">Rebuilds the lost 4.1 lb leg muscle to restore venous return and torch visceral fat.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Mobile Floating Navigation -->
+  <nav class="bottom-bar">
+    <button class="nav-btn active" onclick="jumpTo('overview')">
+      <span>🌐</span>HUD
+    </button>
+    <button class="nav-btn" onclick="jumpTo('symptoms')">
+      <span>⚡</span>Reveal
+    </button>
+    <button class="nav-btn" onclick="jumpTo('training')">
+      <span>🏋️</span>Strength
+    </button>
+    <button class="nav-btn" onclick="jumpTo('regimen')">
+      <span>💊</span>Stack
+    </button>
+    <button class="nav-btn" onclick="jumpTo('protocol')">
+      <span>🛡️</span>Checklist
+    </button>
+  </nav>
+
+  <!-- ThreeJS Visual Engine -->
+  <script>
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x030712, 0.04);
+
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 16;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    const group = new THREE.Group();
+    scene.add(group);
+
+    // Torus knot core
+    const knotGeo = new THREE.TorusKnotGeometry(3.6, 1.1, 120, 24, 2, 3);
+    const knotMat = new THREE.MeshBasicMaterial({
+      color: 0x00f3ff,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.32
+    });
+    const knot = new THREE.Mesh(knotGeo, knotMat);
+    group.add(knot);
+
+    // Inner core
+    const coreGeo = new THREE.IcosahedronGeometry(2.1, 2);
+    const coreMat = new THREE.MeshBasicMaterial({
+      color: 0xff0055,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.55
+    });
+    const core = new THREE.Mesh(coreGeo, coreMat);
+    group.add(core);
+
+    // Embers
+    const pCount = 380;
+    const pGeo = new THREE.BufferGeometry();
+    const pPos = new Float32Array(pCount * 3);
+    for (let i = 0; i < pCount * 3; i += 3) {
+      pPos[i] = (Math.random() - 0.5) * 36;
+      pPos[i+1] = (Math.random() - 0.5) * 36;
+      pPos[i+2] = (Math.random() - 0.5) * 26;
+    }
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+    const pMat = new THREE.PointsMaterial({
+      color: 0x00f3ff,
+      size: 0.18,
+      transparent: true,
+      opacity: 0.65
+    });
+    const embers = new THREE.Points(pGeo, pMat);
+    scene.add(embers);
+
+    let clock = new THREE.Clock();
+    let currentMode = 'heart';
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+      const beat = 1 + Math.sin(t * 3.6) * 0.08 + Math.pow(Math.sin(t * 3.6), 10) * 0.14;
+
+      if (currentMode === 'heart') {
+        knot.rotation.x = t * 0.25;
+        knot.rotation.y = t * 0.35;
+        knot.scale.set(beat, beat, beat);
+        core.rotation.y = -t * 0.5;
+        core.scale.set(beat * 0.9, beat * 0.9, beat * 0.9);
+      } else if (currentMode === 'anatomy') {
+        knot.rotation.x = 0;
+        knot.rotation.y = t * 0.5;
+        knot.scale.set(0.7, 1.9, 0.7);
+        core.scale.set(0.5, 1.2, 0.5);
+      } else if (currentMode === 'cellular') {
+        knot.rotation.x = t * 0.7;
+        knot.rotation.z = t * 0.5;
+        knot.scale.set(1.4, 0.7, 0.7);
+      }
+
+      embers.rotation.y = t * 0.04;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.set3DMode = function(mode) {
+      currentMode = mode;
+      document.querySelectorAll('.vp-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+
+      if (mode === 'heart') {
+        gsap.to(knotMat.color, { r: 0.0, g: 0.95, b: 1.0, duration: 0.5 });
+        gsap.to(coreMat.color, { r: 1.0, g: 0.0, b: 0.33, duration: 0.5 });
+      } else if (mode === 'anatomy') {
+        gsap.to(knotMat.color, { r: 0.0, g: 1.0, b: 0.4, duration: 0.5 });
+        gsap.to(coreMat.color, { r: 0.6, g: 0.0, b: 1.0, duration: 0.5 });
+      } else if (mode === 'cellular') {
+        gsap.to(knotMat.color, { r: 1.0, g: 0.66, b: 0.0, duration: 0.5 });
+        gsap.to(coreMat.color, { r: 0.0, g: 0.95, b: 1.0, duration: 0.5 });
+      }
+    };
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      group.position.y = -scrollY * 0.0055;
+      group.rotation.y = scrollY * 0.0018;
+    });
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      initScratchCanvas();
+    });
+
+    // Scratch Canvas
+    const sCanvas = document.getElementById('scratchCanvas');
+    const sCtx = sCanvas.getContext('2d');
+    let isScratching = false;
+
+    function initScratchCanvas() {
+      const rect = sCanvas.parentElement.getBoundingClientRect();
+      sCanvas.width = rect.width;
+      sCanvas.height = rect.height;
+
+      const grad = sCtx.createLinearGradient(0, 0, sCanvas.width, sCanvas.height);
+      grad.addColorStop(0, '#0a192f');
+      grad.addColorStop(0.5, '#1e293b');
+      grad.addColorStop(1, '#0f172a');
+      sCtx.fillStyle = grad;
+      sCtx.fillRect(0, 0, sCanvas.width, sCanvas.height);
+
+      sCtx.strokeStyle = 'rgba(0, 243, 255, 0.2)';
+      sCtx.lineWidth = 1;
+      for (let x = 0; x < sCanvas.width; x += 22) {
+        sCtx.beginPath();
+        sCtx.moveTo(x, 0);
+        sCtx.lineTo(x, sCanvas.height);
+        sCtx.stroke();
+      }
+      for (let y = 0; y < sCanvas.height; y += 22) {
+        sCtx.beginPath();
+        sCtx.moveTo(0, y);
+        sCtx.lineTo(sCanvas.width, y);
+        sCtx.stroke();
+      }
+
+      sCtx.font = 'bold 14px "Chakra Petch", sans-serif';
+      sCtx.fillStyle = '#00f3ff';
+      sCtx.textAlign = 'center';
+      sCtx.fillText('// ENCRYPTED DIAGNOSTIC SENSOR FOIL //', sCanvas.width / 2, sCanvas.height / 2 - 10);
+      sCtx.font = '11px "JetBrains Mono", monospace';
+      sCtx.fillStyle = '#94a3b8';
+      sCtx.fillText('[ SWIPE / RUB TO DE-CLOAK REVEAL ]', sCanvas.width / 2, sCanvas.height / 2 + 14);
+    }
+    initScratchCanvas();
+
+    function scratch(e) {
+      if (!isScratching) return;
+      const rect = sCanvas.getBoundingClientRect();
+      const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+      const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
+
+      sCtx.globalCompositeOperation = 'destination-out';
+      sCtx.beginPath();
+      sCtx.arc(x, y, 30, 0, Math.PI * 2, false);
+      sCtx.fill();
+    }
+
+    sCanvas.addEventListener('mousedown', (e) => { isScratching = true; scratch(e); });
+    sCanvas.addEventListener('mousemove', scratch);
+    window.addEventListener('mouseup', () => { isScratching = false; });
+    sCanvas.addEventListener('touchstart', (e) => { isScratching = true; scratch(e); }, { passive: true });
+    sCanvas.addEventListener('touchmove', scratch, { passive: true });
+    window.addEventListener('touchend', () => { isScratching = false; });
+
+    window.toggleTask = function(card) {
+      card.classList.toggle('done');
+      if (navigator.vibrate) navigator.vibrate(30);
+    };
+
+    window.jumpTo = function(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+      }
+    };
+  </script>
+</body>
+</html>
