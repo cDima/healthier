@@ -3,28 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>CYBERNETIC BIO-CORE // QUANTIFIED SELF PROTOCOL</title>
+  <title>CYBERNETIC CHRONICLES // QUANTIFIED SELF DOSSIER</title>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,500;0,700;0,900;1,700&family=JetBrains+Mono:wght@300;400;600;800&family=Space+Grotesk:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,500;0,700;0,900;1,700&family=JetBrains+Mono:wght@300;400;600;800&family=Space+Grotesk:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   
-  <!-- WebGL & Animation -->
+  <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
   <style>
     :root {
-      --bg: #030712;
-      --card-bg: rgba(9, 18, 36, 0.82);
-      --card-border: rgba(0, 243, 255, 0.2);
+      --bg: #030713;
+      --card-bg: rgba(9, 18, 38, 0.85);
+      --card-border: rgba(0, 243, 255, 0.22);
       --neon-cyan: #00f3ff;
       --neon-pink: #ff0055;
       --neon-amber: #ffaa00;
       --neon-green: #00ff66;
-      --neon-purple: #a855f7;
+      --neon-purple: #b026ff;
       --text-main: #f1f5f9;
       --text-dim: #94a3b8;
       --font-mono: 'JetBrains Mono', monospace;
@@ -46,14 +46,14 @@
       overflow-x: hidden;
       line-height: 1.5;
       background-image: 
-        radial-gradient(circle at 50% 15%, rgba(0, 243, 255, 0.08) 0%, transparent 60%),
-        radial-gradient(circle at 85% 75%, rgba(255, 0, 85, 0.07) 0%, transparent 60%),
+        radial-gradient(circle at 50% 12%, rgba(0, 243, 255, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 85% 65%, rgba(255, 0, 85, 0.07) 0%, transparent 60%),
         linear-gradient(rgba(0, 243, 255, 0.02) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 243, 255, 0.02) 1px, transparent 1px);
       background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
     }
 
-    /* Fixed ThreeJS Canvas */
+    /* Fixed ThreeJS Layer */
     #canvas-container {
       position: fixed;
       top: 0;
@@ -65,7 +65,6 @@
       opacity: 0.85;
     }
 
-    /* Scanline overlay */
     .scanlines {
       position: fixed;
       top: 0;
@@ -88,7 +87,7 @@
       z-index: 100;
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      background: rgba(3, 7, 18, 0.88);
+      background: rgba(3, 7, 19, 0.9);
       border-bottom: 1px solid rgba(0, 243, 255, 0.25);
       padding: 12px 20px;
       display: flex;
@@ -103,16 +102,16 @@
       font-family: var(--font-display);
       font-weight: 900;
       letter-spacing: 2px;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       color: #fff;
     }
 
     .brand-glitch {
       color: var(--neon-cyan);
-      text-shadow: 0 0 12px rgba(0, 243, 255, 0.8);
+      text-shadow: 0 0 14px rgba(0, 243, 255, 0.8);
     }
 
-    .pulse-dot {
+    .live-pulse {
       width: 9px;
       height: 9px;
       background: var(--neon-green);
@@ -132,19 +131,6 @@
       align-items: center;
     }
 
-    .net-pill {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      background: rgba(0, 243, 255, 0.1);
-      border: 1px solid var(--neon-cyan);
-      color: var(--neon-cyan);
-      padding: 4px 10px;
-      border-radius: 20px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 700;
-    }
-
     .ha-live-pill {
       font-family: var(--font-mono);
       font-size: 0.68rem;
@@ -161,14 +147,9 @@
     main {
       position: relative;
       z-index: 10;
-      max-width: 720px;
+      max-width: 760px;
       margin: 0 auto;
       padding: 85px 18px 120px;
-    }
-
-    /* Hero */
-    .hero-section {
-      padding: 30px 0 20px;
     }
 
     .meta-tag {
@@ -184,27 +165,27 @@
     }
 
     .meta-tag::before {
-      content: "[TELEMETRY // MULTI-SENSOR]";
+      content: "[DOSSIER // 2-YEAR QUANTIFIED SELF]";
       color: var(--neon-pink);
       font-weight: 800;
     }
 
     h1.hero-title {
       font-family: var(--font-display);
-      font-size: 2.7rem;
+      font-size: 2.8rem;
       font-weight: 900;
-      line-height: 1.08;
+      line-height: 1.05;
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 12px;
-      background: linear-gradient(135deg, #ffffff 40%, var(--neon-cyan) 80%, var(--neon-pink) 100%);
+      background: linear-gradient(135deg, #ffffff 40%, var(--neon-cyan) 75%, var(--neon-pink) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-shadow: 0 0 35px rgba(0, 243, 255, 0.35);
     }
 
     .hero-subtitle {
-      font-size: 0.98rem;
+      font-size: 1rem;
       color: var(--text-dim);
       margin-bottom: 24px;
       line-height: 1.5;
@@ -229,7 +210,7 @@
 
     .ticker-content {
       display: inline-block;
-      animation: ticker 30s linear infinite;
+      animation: ticker 32s linear infinite;
     }
 
     @keyframes ticker {
@@ -237,7 +218,7 @@
       100% { transform: translateX(-50%); }
     }
 
-    /* 3D Visualizer Mode Controller */
+    /* 3D Switcher */
     .viewport-ctrl {
       background: rgba(0, 243, 255, 0.05);
       border: 1px solid rgba(0, 243, 255, 0.2);
@@ -265,12 +246,12 @@
 
     .vp-btn.active {
       background: var(--neon-cyan);
-      color: #030712;
+      color: #030713;
       font-weight: 800;
       box-shadow: 0 0 14px rgba(0, 243, 255, 0.6);
     }
 
-    /* Live HA Sensor Matrix Grid */
+    /* Core Matrix Grid */
     .sensor-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -352,7 +333,7 @@
     .c-cyan { color: var(--neon-cyan); }
     .c-amber { color: var(--neon-amber); }
 
-    /* Interactive HUD Section Cards */
+    /* HUD Section Cards */
     .hud-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -410,7 +391,86 @@
       font-weight: 700;
     }
 
-    /* Dynamic Scratch Foil */
+    /* Interactive Timeline Carousel / Scroller */
+    .timeline-scroller {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 10px 4px 16px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: var(--neon-cyan) rgba(0,0,0,0.5);
+    }
+
+    .timeline-scroller::-webkit-scrollbar {
+      height: 6px;
+    }
+    .timeline-scroller::-webkit-scrollbar-thumb {
+      background: var(--neon-cyan);
+      border-radius: 4px;
+    }
+
+    .month-tile {
+      flex: 0 0 200px;
+      scroll-snap-align: start;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 14px;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .month-tile:hover, .month-tile.active-month {
+      background: rgba(0, 243, 255, 0.06);
+      border-color: var(--neon-cyan);
+      transform: translateY(-2px);
+    }
+
+    .month-tile.peak-month {
+      border-color: var(--neon-green);
+      background: rgba(0, 255, 102, 0.05);
+    }
+
+    .month-tile.dip-month {
+      border-color: var(--neon-pink);
+      background: rgba(255, 0, 85, 0.05);
+    }
+
+    .tile-month-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .tile-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .tile-stat-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+
+    .tile-stat-val {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    /* Scratch Foil Canvas */
     .scratch-container {
       position: relative;
       width: 100%;
@@ -447,67 +507,61 @@
       color: var(--neon-cyan);
       z-index: 3;
       pointer-events: none;
-      background: rgba(3, 7, 18, 0.85);
+      background: rgba(3, 7, 19, 0.85);
       padding: 3px 8px;
       border-radius: 4px;
       border: 1px solid rgba(0, 243, 255, 0.3);
     }
 
-    /* Training Telemetry Highlights */
-    .workout-feed {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    /* Bar Chart Component */
+    .bar-chart-container {
+      background: rgba(0,0,0,0.4);
+      padding: 16px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
       margin-top: 14px;
     }
 
-    .workout-row {
+    /* Bottom Floating Nav */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: rgba(3, 7, 19, 0.9);
+      border-top: 1px solid rgba(0, 243, 255, 0.2);
+      padding: 10px 16px 22px;
       display: flex;
+      justify-content: space-around;
       align-items: center;
-      gap: 12px;
-      padding: 12px 14px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
     }
 
-    .workout-row.strength {
-      border-left: 3px solid var(--neon-green);
-      background: rgba(0, 255, 102, 0.04);
-    }
-
-    .workout-icon {
-      font-size: 1.25rem;
-    }
-
-    .workout-info {
-      flex: 1;
-    }
-
-    .workout-title {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .workout-meta {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
+    .nav-btn {
+      background: none;
+      border: none;
       color: var(--text-dim);
-      margin-top: 2px;
-    }
-
-    .workout-tag {
       font-family: var(--font-mono);
-      font-size: 0.65rem;
-      padding: 3px 8px;
-      border-radius: 4px;
-      background: rgba(0, 255, 102, 0.12);
-      color: var(--neon-green);
-      font-weight: 700;
+      font-size: 0.63rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      text-transform: uppercase;
     }
 
-    /* Interactive Protocol Checklist */
+    .nav-btn.active, .nav-btn:hover {
+      color: var(--neon-cyan);
+    }
+
+    .nav-btn span {
+      font-size: 1.15rem;
+    }
+
+    /* Interactive checklist */
     .checklist {
       display: flex;
       flex-direction: column;
@@ -525,11 +579,6 @@
       border-radius: 10px;
       cursor: pointer;
       transition: all 0.2s ease;
-    }
-
-    .check-item:hover {
-      background: rgba(0, 243, 255, 0.08);
-      border-color: var(--neon-cyan);
     }
 
     .check-item.done {
@@ -552,102 +601,9 @@
 
     .check-item.done .cyber-check {
       background: var(--neon-green);
-      color: #030712;
+      color: #030713;
       border-color: var(--neon-green);
       font-weight: 800;
-    }
-
-    .check-title {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .check-desc {
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      margin-top: 2px;
-      line-height: 1.35;
-    }
-
-    /* Regimen Pills */
-    .regimen-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .reg-pill {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 10px;
-      padding: 10px 12px;
-    }
-
-    .reg-pill.active-new {
-      border-color: var(--neon-green);
-      background: rgba(0, 255, 102, 0.06);
-    }
-
-    .reg-pill.statin {
-      border-color: var(--neon-pink);
-      background: rgba(255, 0, 85, 0.06);
-    }
-
-    .reg-name {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .reg-sub {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--neon-cyan);
-      margin-top: 2px;
-    }
-
-    .reg-pill.active-new .reg-sub { color: var(--neon-green); }
-    .reg-pill.statin .reg-sub { color: var(--neon-pink); }
-
-    /* Bottom Floating Nav */
-    .bottom-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      background: rgba(3, 7, 18, 0.88);
-      border-top: 1px solid rgba(0, 243, 255, 0.2);
-      padding: 10px 20px 22px;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-    }
-
-    .nav-btn {
-      background: none;
-      border: none;
-      color: var(--text-dim);
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      text-transform: uppercase;
-    }
-
-    .nav-btn.active, .nav-btn:hover {
-      color: var(--neon-cyan);
-    }
-
-    .nav-btn span {
-      font-size: 1.15rem;
     }
   </style>
 </head>
@@ -660,30 +616,29 @@
   <!-- Header -->
   <header>
     <div class="brand">
-      <span class="pulse-dot"></span>
-      <span class="brand-glitch">HEALTHIO // BIO-CORE</span>
+      <span class="live-pulse"></span>
+      <span class="brand-glitch">CHRONICLES // QUANTIFIED SELF</span>
     </div>
     <div class="header-badges">
-      <span class="ha-live-pill">HA: LIVE 74.3 KG</span>
-      <span class="net-pill">PUBLIC SYNC</span>
+      <span class="ha-live-pill">HA: 74.3 KG (163.8 LB)</span>
     </div>
   </header>
 
   <main>
-    <!-- Live Telemetry Stream Ticker -->
+    <!-- Telemetry Ticker -->
     <div class="ticker-bar">
-      <span style="color: var(--neon-pink); font-weight: 800;">[STREAM]</span>
+      <span style="color: var(--neon-pink); font-weight: 800;">[CHRONICLES]</span>
       <div class="ticker-content">
-        HA SCALE: 74.3 KG (163.8 LB) &bull; LEAN: 61.1 KG (134.7 LB) &bull; VAT: 2.97 LB &bull; LIVER ALT: 34 U/L (RECOVERED FROM 71) &bull; LDL-C: 78 MG/DL &bull; STRATEGY: STRENGTH + ZONE 2 + UBIQUINOL &bull; STRENGTH PHASE ACTIVE &bull; 
+        717 STRAVA ARCHIVES &bull; 1,131 APPLE WORKOUTS &bull; 7 BODY置PEC SCANS &bull; OCT '25 PEAK: VO2 45.9 / RUNS 91 KM / LEAN 119.9 LB &bull; MID-2026 DIP: VO2 36.5 / LEAN 109.1 LB &bull; OCT '26 STRENGTH PIVOT ACTIVE &bull; 
       </div>
     </div>
 
     <!-- Hero Section -->
     <section class="hero-section" id="overview">
-      <div class="meta-tag">QUANTIFIED SELF TELEMETRY // 2026.10</div>
-      <h1 class="hero-title">BIO-CORE<br><span style="color: var(--neon-cyan)">CYBERNETIC</span> HUD</h1>
+      <div class="meta-tag">2-YEAR LONGITUDINAL BIO-METRIC DOSSIER</div>
+      <h1 class="hero-title">QUANTIFIED<br><span style="color: var(--neon-cyan)">SELF MATRIX</span></h1>
       <p class="hero-subtitle">
-        Unified real-time telemetry fusing <strong>7 BodySpec DEXA scans</strong>, <strong>fasting blood turnaround panels</strong>, <strong>Home Assistant smart-scale weights</strong>, and <strong>Garmin / Apple Health recovery metrics</strong>.
+        A dynamic, scroll-activated chronological breakdown compiling all recorded runs, strength sessions, VO2 max shifts, resting heart rates, DEXA scans, and blood turnaround data over the past 21 months.
       </p>
 
       <!-- 3D Switcher Control Bar -->
@@ -693,127 +648,285 @@
         <button class="vp-btn" onclick="set3DMode('cellular')">Mitochondria</button>
       </div>
 
-      <!-- Live HA & Sensor Grid -->
+      <!-- Core Sensor Summary Cards -->
       <div class="sensor-grid">
         <div class="sensor-card live">
           <span class="sensor-badge-source">HOME ASSISTANT</span>
-          <div class="sensor-label">Live Scale Weight</div>
+          <div class="sensor-label">Current Scale Weight</div>
           <div class="sensor-val">74.3 <span class="sensor-unit">kg</span></div>
-          <div class="sensor-sub c-green">163.8 lb &bull; Auto-Synced</div>
+          <div class="sensor-sub c-green">163.8 lb &bull; Live Network Polling</div>
         </div>
 
         <div class="sensor-card live">
           <span class="sensor-badge-source">HOME ASSISTANT</span>
           <div class="sensor-label">Lean Body Mass</div>
           <div class="sensor-val">61.1 <span class="sensor-unit">kg</span></div>
-          <div class="sensor-sub c-cyan">134.7 lb &bull; Rebuilding Phase</div>
+          <div class="sensor-sub c-cyan">134.7 lb &bull; Rebuilding Stage</div>
         </div>
 
         <div class="sensor-card alert">
           <span class="sensor-badge-source">DEXA SCAN</span>
           <div class="sensor-label">Visceral Fat (VAT)</div>
           <div class="sensor-val">2.97 <span class="sensor-unit">lb</span></div>
-          <div class="sensor-sub c-pink">1,347g &bull; Target: &lt; 1.0 lb</div>
+          <div class="sensor-sub c-pink">1,347g &bull; Liquidation Target &lt; 1.0 lb</div>
         </div>
 
         <div class="sensor-card gold">
           <span class="sensor-badge-source">LAB RESULTS</span>
           <div class="sensor-label">Liver ALT Recovery</div>
           <div class="sensor-val">34 <span class="sensor-unit">U/L</span></div>
-          <div class="sensor-sub c-green">&check; Normalized from 71</div>
+          <div class="sensor-sub c-green">&check; Normalized from 71 U/L</div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 1: THE INTERACTIVE REVEAL (RUB-OFF FOIL) -->
-    <section class="hud-card" id="symptoms">
+    <!-- SECTION 1: INTERACTIVE MONTHLY CHRONICLES CAROUSEL -->
+    <section class="hud-card" id="timeline">
       <div class="section-header">
-        <span class="section-icon">⚡</span>
-        <h2 class="section-title">Root Cause Decryption</h2>
-        <span class="section-pill">INTERACTIVE FOIL</span>
-      </div>
-
-      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 10px;">
-        Why did acute lightheadedness upon standing and cardiac fatigue happen? <strong>Rub your finger or cursor across the encrypted foil below</strong> to de-cloak the molecular cause:
-      </p>
-
-      <!-- Scratch Foil Canvas -->
-      <div class="scratch-container">
-        <div class="scratch-underlay">
-          <h3 style="font-family: var(--font-display); color: var(--neon-pink); font-size: 1.15rem; margin-bottom: 6px;">
-            MOLECULAR MECHANISM DECRYPTED
-          </h3>
-          <p style="font-size: 0.82rem; color: #fff; line-height: 1.42;">
-            <strong>1. Vasodilator Stacking:</strong> Stacking 4 systemic vasodilators (Berberine, Quercetin, Resveratrol, Magnesium) on top of rapid weight loss caused acute blood pooling in the legs upon rising.<br>
-            <strong>2. Skeletal Muscle Pump Loss:</strong> DEXA revealed a -4.1 lb drop in leg muscle, degrading mechanical venous return to the heart.<br>
-            <strong>3. Statin CoQ10 Depletion:</strong> Daily Atorvastatin blocks HMG-CoA reductase, depriving myocardial mitochondria of Ubiquinol (CoQ10) required for cardiac ATP.
-          </p>
-        </div>
-        <canvas id="scratchCanvas" class="scratch-canvas"></canvas>
-        <div class="scratch-hint">SWIPE / TOUCH TO DE-CLOAK</div>
-      </div>
-    </section>
-
-    <!-- SECTION 2: TRAINING STATUS & THE STRENGTH SHIFT -->
-    <section class="hud-card" id="training">
-      <div class="section-header">
-        <span class="section-icon">🏋️</span>
-        <h2 class="section-title">Training Phase: Strength Pivot</h2>
-        <span class="section-pill">APPLE &times; GARMIN</span>
+        <span class="section-icon">🗓️</span>
+        <h2 class="section-title">Monthly Chronicles</h2>
+        <span class="section-pill">SWIPE MONTHS &rarr;</span>
       </div>
 
       <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 12px;">
-        Running was paused for weeks while pivoting exclusively into <strong>heavy strength & functional resistance</strong>. Here is why this was physiologically essential:
+        Scroll horizontally through every month from <strong>January 2025 to Present</strong> to see mileage, workout counts, resting HR, and VO2 max shifts:
       </p>
 
-      <div class="workout-feed">
-        <div class="workout-row strength">
-          <span class="workout-icon">💪</span>
-          <div class="workout-info">
-            <div class="workout-title">Heavy Compound Strength Phase</div>
-            <div class="workout-meta">Squats &bull; Deadlifts &bull; Presses &bull; Leg Hypertrophy</div>
+      <!-- Carousel Cards -->
+      <div class="timeline-scroller">
+        <!-- Jan 2025 -->
+        <div class="month-tile">
+          <div class="tile-month-name">
+            <span>Jan 2025</span>
+            <span class="tile-badge" style="background: rgba(0,243,255,0.15); color: var(--neon-cyan);">73 Workouts</span>
           </div>
-          <span class="workout-tag">ACTIVE</span>
+          <div class="tile-stat-row"><span>Runs:</span><span class="tile-stat-val">23 (83.4 km)</span></div>
+          <div class="tile-stat-row"><span>Strength:</span><span class="tile-stat-val">22 sessions</span></div>
+          <div class="tile-stat-row"><span>Avg Steps:</span><span class="tile-stat-val">6,786 / day</span></div>
+          <div class="tile-stat-row"><span>Resting HR:</span><span class="tile-stat-val">65.6 bpm</span></div>
+          <div class="tile-stat-row"><span>VO2 Max:</span><span class="tile-stat-val">42.1</span></div>
         </div>
 
-        <div class="workout-row">
-          <span class="workout-icon">🏃</span>
-          <div class="workout-info">
-            <div class="workout-title">Cardio Depletion Phase (Paused)</div>
-            <div class="workout-meta">Running paused to prevent catabolic lean tissue wasting</div>
+        <!-- Mar 2025 -->
+        <div class="month-tile">
+          <div class="tile-month-name">
+            <span>Mar 2025</span>
+            <span class="tile-badge" style="background: rgba(0,255,102,0.15); color: var(--neon-green);">Run Peak</span>
           </div>
-          <span class="workout-tag" style="background: rgba(255,255,255,0.08); color: var(--text-dim);">RESTORE</span>
+          <div class="tile-stat-row"><span>Runs:</span><span class="tile-stat-val c-green">26 (125.6 km)</span></div>
+          <div class="tile-stat-row"><span>Cycling:</span><span class="tile-stat-val">3 (36.8 km)</span></div>
+          <div class="tile-stat-row"><span>Avg Steps:</span><span class="tile-stat-val">8,123 / day</span></div>
+          <div class="tile-stat-row"><span>Resting HR:</span><span class="tile-stat-val">66.5 bpm</span></div>
+          <div class="tile-stat-row"><span>VO2 Max:</span><span class="tile-stat-val">43.0</span></div>
         </div>
-      </div>
 
-      <div style="font-family: var(--font-mono); font-size: 0.74rem; color: var(--neon-cyan); background: rgba(0,243,255,0.06); padding: 12px 14px; border-radius: 8px; border-left: 3px solid var(--neon-cyan); margin-top: 14px;">
-        <strong>The Bio-Mechanic Reality:</strong> Your 3-year DEXA record shows pure cardio + crash deficits dropped lean mass from <strong>119.9 lb &rarr; 109.1 lb</strong> while visceral fat stayed flat at 2.97 lb. Strength training rebuilds the GLUT4 muscle glucose sink, forcing visceral fat to be oxidized instead of muscle tissue.
+        <!-- May 2025: All Time Fitness Peak -->
+        <div class="month-tile peak-month">
+          <div class="tile-month-name">
+            <span class="c-green">May 2025 🏆</span>
+            <span class="tile-badge" style="background: var(--neon-green); color: #030713; font-weight: 800;">DEXA PEAK</span>
+          </div>
+          <div class="tile-stat-row"><span>Runs:</span><span class="tile-stat-val c-green">24 (117.5 km)</span></div>
+          <div class="tile-stat-row"><span>Lean Mass:</span><span class="tile-stat-val c-green">119.9 lb (Peak)</span></div>
+          <div class="tile-stat-row"><span>VAT Fat:</span><span class="tile-stat-val c-green">2.80 lb (Lowest)</span></div>
+          <div class="tile-stat-row"><span>VO2 Max:</span><span class="tile-stat-val c-green">46.0 (Top 15%)</span></div>
+          <div class="tile-stat-row"><span>Avg Steps:</span><span class="tile-stat-val">11,190 / day</span></div>
+        </div>
+
+        <!-- Jul 2025: Cycling Peak -->
+        <div class="month-tile">
+          <div class="tile-month-name">
+            <span>Jul 2025</span>
+            <span class="tile-badge" style="background: rgba(0,243,255,0.15); color: var(--neon-cyan);">Ride Peak</span>
+          </div>
+          <div class="tile-stat-row"><span>Rides:</span><span class="tile-stat-val c-cyan">17 (328.2 km)</span></div>
+          <div class="tile-stat-row"><span>Runs:</span><span class="tile-stat-val">7 (32.6 km)</span></div>
+          <div class="tile-stat-row"><span>Strength:</span><span class="tile-stat-val">9 sessions</span></div>
+          <div class="tile-stat-row"><span>Resting HR:</span><span class="tile-stat-val c-cyan">61.2 bpm</span></div>
+          <div class="tile-stat-row"><span>Avg Sleep:</span><span class="tile-stat-val">8.8 h / night</span></div>
+        </div>
+
+        <!-- Sep 2025: Second Running Wave -->
+        <div class="month-tile">
+          <div class="tile-month-name">
+            <span>Sep 2025</span>
+            <span class="tile-badge" style="background: rgba(0,255,102,0.15); color: var(--neon-green);">Volume Wave</span>
+          </div>
+          <div class="tile-stat-row"><span>Runs:</span><span class="tile-stat-val">16 (133.0 km)</span></div>
+          <div class="tile-stat-row"><span>Strength:</span><span class="tile-stat-val">15 sessions</span></div>
+          <div class="tile-stat-row"><span>Rides:</span><span class="tile-stat-val">6 (83.0 km)</span></div>
+          <div class="tile-stat-row"><span>VO2 Max:</span><span class="tile-stat-val c-green">46.3 (Peak)</span></div>
+          <div class="tile-stat-row"><span>Resting HR:</span><span class="tile-stat-val">59.5 bpm</span></div>
+        </div>
+
+        <!-- Oct 2025 -->
+        <div class="month-tile">
+          <div class="tile-month-name">
+            <span>Oct 2025</span>
+            <span class="tile-badge" style="background: rgba(0,243,255,0.15); color: var(--neon-cyan);">High Output</span>
+          </div>
+          <div class="tile-stat-row"><span>Runs:</span><span class="tile-stat-val">11 (91.0 km)</span></div>
+          <div class="tile-stat-row"><span>Strength:</span><span class="tile-stat-val">16 sessions</span></div>
+          <div class="tile-stat-row"><span>DEXA Lean:</span><span class="tile-stat-val">118.6 lb</span></div>
+          <div class="tile-stat-row"><span>VO2 Max:</span><span class="tile-stat-val">45.4</span></div>
+          <div class="tile-stat-row"><span>Avg Steps:</span><span class="tile-stat-val">9,645 / day</span></div>
+        </div>
+
+        <!-- Mar 2026: The Slowdown Begins -->
+        <div class="month-tile dip-month">
+          <div class="tile-month-name">
+            <span>Mar 2026</span>
+            <span class="tile-badge" style="background: rgba(255,0,85,0.2); color: var(--neon-pink);">Deceleration</span>
+          </div>
+          <div class="tile-stat-row"><span>Runs:</span><span class="tile-stat-val c-pink">4 (14.1 km)</span></div>
+          <div class="tile-stat-row"><span>Strength:</span><span class="tile-stat-val">2 sessions</span></div>
+          <div class="tile-stat-row"><span>VO2 Max:</span><span class="tile-stat-val c-pink">39.9 &darr;</span></div>
+          <div class="tile-stat-row"><span>Avg Active kcal:</span><span class="tile-stat-val">298 kcal / day</span></div>
+        </div>
+
+        <!-- May 2026: The Low Point -->
+        <div class="month-tile dip-month">
+          <div class="tile-month-name">
+            <span>May 2026</span>
+            <span class="tile-badge" style="background: var(--neon-pink); color: #fff;">Sabbatical</span>
+          </div>
+          <div class="tile-stat-row"><span>Runs:</span><span class="tile-stat-val c-pink">0 (0.0 km)</span></div>
+          <div class="tile-stat-row"><span>Resting HR:</span><span class="tile-stat-val c-pink">69.2 bpm &uarr;</span></div>
+          <div class="tile-stat-row"><span>VO2 Max:</span><span class="tile-stat-val c-pink">36.4 &darr;</span></div>
+          <div class="tile-stat-row"><span>Avg Sleep:</span><span class="tile-stat-val">5.4 h / night</span></div>
+        </div>
+
+        <!-- Sep 2026: The Rapid Scale Drop -->
+        <div class="month-tile dip-month">
+          <div class="tile-month-name">
+            <span>Sep 2026</span>
+            <span class="tile-badge" style="background: rgba(255,0,85,0.2); color: var(--neon-pink);">-7.8 lb Drop</span>
+          </div>
+          <div class="tile-stat-row"><span>Scale Weight:</span><span class="tile-stat-val c-pink">169.3 lb</span></div>
+          <div class="tile-stat-row"><span>Lean Mass:</span><span class="tile-stat-val c-pink">109.1 lb (-10.8 lb)</span></div>
+          <div class="tile-stat-row"><span>Visceral Fat:</span><span class="tile-stat-val c-pink">2.97 lb (Trapped)</span></div>
+          <div class="tile-stat-row"><span>Symptoms:</span><span class="tile-stat-val c-pink">Dizziness / Weak Heart</span></div>
+        </div>
+
+        <!-- Oct 2026: The Strength Pivot -->
+        <div class="month-tile peak-month">
+          <div class="tile-month-name">
+            <span class="c-green">Oct 2026 🛡️</span>
+            <span class="tile-badge" style="background: var(--neon-green); color: #030713; font-weight: 800;">ACTIVE NOW</span>
+          </div>
+          <div class="tile-stat-row"><span>Running:</span><span class="tile-stat-val" style="color: var(--text-dim);">Paused (No Wasting)</span></div>
+          <div class="tile-stat-row"><span>Training:</span><span class="tile-stat-val c-green">Heavy Strength Active</span></div>
+          <div class="tile-stat-row"><span>Regimen:</span><span class="tile-stat-val c-green">+ Ubiquinol & Mg Threonate</span></div>
+          <div class="tile-stat-row"><span>Vasodilators:</span><span class="tile-stat-val c-green">Discontinued</span></div>
+          <div class="tile-stat-row"><span>Live Weight:</span><span class="tile-stat-val c-green">74.3 kg (163.8 lb)</span></div>
+        </div>
       </div>
     </section>
 
-    <!-- SECTION: VO2 MAX COLLAPSE & RECOVERY TRAJECTORY -->
+    <!-- SECTION 2: 2-YEAR RUNNING & WORKOUT MILEAGE BAR CHART -->
+    <section class="hud-card" id="volume">
+      <div class="section-header">
+        <span class="section-icon">📊</span>
+        <h2 class="section-title">Longitudinal Monthly Distance</h2>
+        <span class="section-pill">STRAVA ARCHIVE</span>
+      </div>
+
+      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 12px;">
+        Monthly Running (Cyan) vs Cycling (Pink) kilometers logged over the last 21 months:
+      </p>
+
+      <div class="bar-chart-container">
+        <svg viewBox="0 0 540 220" width="100%" height="auto" style="overflow: visible;">
+          <!-- Grid lines -->
+          <line x1="40" y1="30" x2="520" y2="30" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
+          <line x1="40" y1="80" x2="520" y2="80" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
+          <line x1="40" y1="130" x2="520" y2="130" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
+          <line x1="40" y1="180" x2="520" y2="180" stroke="rgba(255,255,255,0.1)"/>
+
+          <!-- Y-axis labels -->
+          <text x="35" y="34" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="end">300 km</text>
+          <text x="35" y="84" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="end">200 km</text>
+          <text x="35" y="134" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="end">100 km</text>
+          <text x="35" y="184" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="end">0</text>
+
+          <!-- Bars for 2025 -->
+          <!-- Jan '25: Run 83.4 km -->
+          <rect x="52" y="138" width="16" height="42" fill="#00f3ff" rx="3"/>
+          <text x="60" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">J</text>
+
+          <!-- Mar '25: Run 125.6 km, Ride 36.8 km -->
+          <rect x="92" y="117" width="16" height="63" fill="#00f3ff" rx="3"/>
+          <rect x="110" y="161" width="10" height="19" fill="#ff0055" rx="2"/>
+          <text x="104" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">M</text>
+
+          <!-- May '25: Run 117.5 km -->
+          <rect x="136" y="121" width="16" height="59" fill="#00f3ff" rx="3"/>
+          <text x="144" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">M</text>
+
+          <!-- Jul '25: Ride 328.2 km, Run 32.6 km -->
+          <rect x="176" y="16" width="18" height="164" fill="#ff0055" rx="3"/>
+          <rect x="196" y="163" width="12" height="17" fill="#00f3ff" rx="2"/>
+          <text x="190" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">J '25</text>
+
+          <!-- Sep '25: Run 133.0 km, Ride 83.0 km -->
+          <rect x="224" y="113" width="16" height="67" fill="#00f3ff" rx="3"/>
+          <rect x="242" y="138" width="12" height="42" fill="#ff0055" rx="2"/>
+          <text x="236" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">S</text>
+
+          <!-- Nov '25: Run 105.6 km -->
+          <rect x="270" y="127" width="16" height="53" fill="#00f3ff" rx="3"/>
+          <text x="278" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">N</text>
+
+          <!-- Jan '26: Run 53.5 km -->
+          <rect x="314" y="153" width="16" height="27" fill="#00f3ff" rx="3"/>
+          <text x="322" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">J '26</text>
+
+          <!-- Mar '26: Run 14.1 km -->
+          <rect x="358" y="173" width="16" height="7" fill="#00f3ff" rx="3"/>
+          <text x="366" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">M</text>
+
+          <!-- Jul '26: Ride 225.9 km, Run 33.9 km -->
+          <rect x="402" y="67" width="18" height="113" fill="#ff0055" rx="3"/>
+          <rect x="422" y="163" width="12" height="17" fill="#00f3ff" rx="2"/>
+          <text x="416" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">J</text>
+
+          <!-- Sep '26: Run 18.5 km -->
+          <rect x="450" y="170" width="16" height="10" fill="#00f3ff" rx="3"/>
+          <text x="458" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">S</text>
+
+          <!-- Oct '26: Strength Pivot (Green highlight) -->
+          <rect x="490" y="120" width="22" height="60" fill="#00ff66" rx="4"/>
+          <text x="501" y="196" fill="#00ff66" font-size="8" font-family="JetBrains Mono" font-weight="700" text-anchor="middle">OCT</text>
+          <text x="501" y="112" fill="#00ff66" font-size="8" font-family="Chakra Petch" font-weight="800" text-anchor="middle">LIFT</text>
+        </svg>
+
+        <!-- Legend -->
+        <div style="display: flex; justify-content: center; gap: 20px; font-family: var(--font-mono); font-size: 0.72rem; margin-top: 10px;">
+          <div style="display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: #00f3ff; border-radius: 2px;"></span> Running (km)</div>
+          <div style="display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: #ff0055; border-radius: 2px;"></span> Cycling (km)</div>
+          <div style="display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: #00ff66; border-radius: 2px;"></span> Strength Pivot</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: THE VO2 MAX & MUSCLE DROP EXPLAINER -->
     <section class="hud-card" id="vo2max">
       <div class="section-header">
         <span class="section-icon">📉</span>
-        <h2 class="section-title">VO2 Max Collapse & Recovery</h2>
-        <span class="section-pill">APPLE &times; GARMIN DATA</span>
+        <h2 class="section-title">VO2 Max & Muscle Telemetry</h2>
+        <span class="section-pill">DEXA &times; APPLE DATA</span>
       </div>
 
-      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 14px;">
-        Why your estimated VO2 max plunged by <strong>-20.5% (45.9 &rarr; 36.5 mL/kg/min)</strong> in parallel with skeletal muscle loss:
+      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 12px;">
+        Historical trajectory curve showing how the 20% drop in VO2 max mirrored the loss of 10.8 lb of skeletal muscle:
       </p>
 
-      <!-- SVG VO2 Max Trajectory Curve -->
-      <div style="background: rgba(0,0,0,0.45); padding: 14px 10px; border-radius: 12px; border: 1px solid rgba(0,243,255,0.18); margin-bottom: 14px;">
+      <div class="bar-chart-container">
         <svg viewBox="0 0 520 220" width="100%" height="auto" style="overflow: visible;">
           <defs>
-            <linearGradient id="vo2DropGrad" x1="0" y1="0" x2="0" y2="1">
+            <linearGradient id="vo2DropGrad2" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stop-color="#ff0055" stop-opacity="0.35"/>
               <stop offset="100%" stop-color="#ff0055" stop-opacity="0.0"/>
-            </linearGradient>
-            <linearGradient id="vo2RecoveryGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#00ff66" stop-opacity="0.3"/>
-              <stop offset="100%" stop-color="#00ff66" stop-opacity="0.0"/>
             </linearGradient>
           </defs>
 
@@ -827,28 +940,26 @@
           <text x="40" y="99" fill="#94a3b8" font-size="10" font-family="JetBrains Mono" text-anchor="end">41.0</text>
           <text x="40" y="159" fill="#94a3b8" font-size="10" font-family="JetBrains Mono" text-anchor="end">36.0</text>
 
-          <!-- Historical Drop Area -->
-          <path d="M 55 36 L 115 38 L 175 58 L 235 106 L 295 103 L 355 125 L 415 152 L 415 185 L 55 185 Z" fill="url(#vo2DropGrad)"/>
+          <!-- Area -->
+          <path d="M 55 36 L 115 38 L 175 58 L 235 106 L 295 103 L 355 125 L 415 152 L 415 185 L 55 185 Z" fill="url(#vo2DropGrad2)"/>
           
-          <!-- Historical Drop Curve -->
+          <!-- Line -->
           <path d="M 55 36 L 115 38 L 175 58 L 235 106 L 295 103 L 355 125 L 415 152" fill="none" stroke="#ff0055" stroke-width="3" stroke-linecap="round"/>
 
           <!-- Projected Recovery Curve -->
           <path d="M 415 152 Q 455 105 495 50" fill="none" stroke="#00ff66" stroke-width="2.5" stroke-dasharray="6,4"/>
 
-          <!-- Peak Point -->
+          <!-- Points -->
           <circle cx="55" cy="36" r="5" fill="#00f3ff" stroke="#fff" stroke-width="2"/>
           <text x="55" y="24" fill="#00f3ff" font-size="10" font-family="Chakra Petch" font-weight="800" text-anchor="middle">PEAK 45.9</text>
 
-          <!-- Current Dip Point -->
           <circle cx="415" cy="152" r="5" fill="#ff0055" stroke="#fff" stroke-width="2"/>
           <text x="415" y="174" fill="#ff0055" font-size="10" font-family="Chakra Petch" font-weight="800" text-anchor="middle">DIP 36.5 (-20%)</text>
 
-          <!-- Target Recovery Point -->
           <circle cx="495" cy="50" r="5" fill="#00ff66" stroke="#fff" stroke-width="2"/>
           <text x="495" y="38" fill="#00ff66" font-size="10" font-family="Chakra Petch" font-weight="800" text-anchor="end">REBUILD 44+</text>
 
-          <!-- Dates Bottom Axis -->
+          <!-- Dates -->
           <text x="55" y="205" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Oct '25</text>
           <text x="175" y="205" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Nov '25</text>
           <text x="295" y="205" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Mar '26</text>
@@ -857,141 +968,110 @@
         </svg>
       </div>
 
-      <!-- Diagnostic Card on the Drop -->
-      <div style="display: flex; flex-direction: column; gap: 8px;">
-        <div style="background: rgba(255, 0, 85, 0.05); border-left: 3px solid var(--neon-pink); padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 0.82rem; color: var(--text-dim);">
-          <strong style="color: #fff;">Why did it fall?</strong> Apple Watch estimates VO2 max from your <em>heart-rate-to-walking-pace slope</em>. When you lost 4.1 lb of leg muscle and stacked vasodilators, stroke volume decreased, making your heart beat at 86+ bpm for simple walks. The algorithm interpreted this high heart rate as a collapse in cardiorespiratory fitness.
-        </div>
-        <div style="background: rgba(0, 255, 102, 0.05); border-left: 3px solid var(--neon-green); padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 0.82rem; color: var(--text-dim);">
-          <strong style="color: #fff;">The Fix:</strong> Restoring cardiac ATP with <strong>Ubiquinol</strong> and rebuilding leg mass pushes stroke volume back up, naturally sending your VO2 max back above 42+.
-        </div>
+      <div style="font-family: var(--font-mono); font-size: 0.74rem; color: var(--neon-cyan); background: rgba(0,243,255,0.06); padding: 12px 14px; border-radius: 8px; border-left: 3px solid var(--neon-cyan); margin-top: 14px;">
+        &rarr; <strong>Key Insight:</strong> Running has been paused in recent weeks to stop catabolic muscle wasting. Rebuilding the lost 4.1 lb of leg muscle through heavy strength training directly restores cardiac stroke volume and ramps VO2 max back to 44+.
       </div>
     </section>
 
-    <!-- SECTION 3: DAILY BIO-REGIMEN & MINERAL UPGRADE -->
-    <section class="hud-card" id="regimen">
+    <!-- SECTION 4: THE INTERACTIVE REVEAL (RUB-OFF FOIL) -->
+    <section class="hud-card" id="symptoms">
       <div class="section-header">
-        <span class="section-icon">💊</span>
-        <h2 class="section-title">Optimized Daily Bio-Stack</h2>
-        <span class="section-pill">PEER-REVIEWED</span>
+        <span class="section-icon">⚡</span>
+        <h2 class="section-title">Molecular Decryption</h2>
+        <span class="section-pill">RUB TO DE-CLOAK</span>
       </div>
 
-      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 8px;">
-        Daytime vasodilators removed; upgraded to organic amino-acid chelates and active mitochondrial cofactors:
+      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 10px;">
+        Why did acute lightheadedness upon standing and perceived cardiac weakness happen? <strong>Rub your finger or cursor across the sensor foil below:</strong>
       </p>
 
-      <div class="regimen-grid">
-        <div class="reg-pill active-new">
-          <div class="reg-name">Ubiquinol (CoQ10)</div>
-          <div class="reg-sub">100–200 mg AM &bull; Restores Cardiac ATP</div>
+      <div class="scratch-container">
+        <div class="scratch-underlay">
+          <h3 style="font-family: var(--font-display); color: var(--neon-pink); font-size: 1.15rem; margin-bottom: 6px;">
+            DIAGNOSTIC MECHANISM CONFIRMED
+          </h3>
+          <p style="font-size: 0.82rem; color: #fff; line-height: 1.42;">
+            <strong>1. Vasodilator Stacking:</strong> Taking 4 systemic blood-vessel relaxers (Berberine, Quercetin, Resveratrol, Magnesium) caused blood to pool in the lower body when rising.<br>
+            <strong>2. Leg Muscle Pump Loss:</strong> DEXA revealed a -4.1 lb drop in leg lean mass, diminishing mechanical venous return.<br>
+            <strong>3. Statin CoQ10 Block:</strong> Daily Atorvastatin blocked HMG-CoA reductase, stripping heart mitochondria of Ubiquinol needed for cardiac ATP.
+          </p>
         </div>
-
-        <div class="reg-pill active-new">
-          <div class="reg-name">Evalar Mg L-Threonate</div>
-          <div class="reg-sub">Crosses BBB &bull; Deep Sleep &bull; Zero Diarrhea</div>
-        </div>
-
-        <div class="reg-pill statin">
-          <div class="reg-name">Atorvastatin</div>
-          <div class="reg-sub">Daily Rx &bull; LDL-C 78 mg/dL Target</div>
-        </div>
-
-        <div class="reg-pill">
-          <div class="reg-name">Vitamin D3 (5,000 IU)</div>
-          <div class="reg-sub">Corrects Baseline 25 ng/mL Deficit</div>
-        </div>
-
-        <div class="reg-pill">
-          <div class="reg-name">Bone-Up (MCHA + K2)</div>
-          <div class="reg-sub">Microcrystalline Hydroxyapatite + MK-7</div>
-        </div>
-
-        <div class="reg-pill" style="opacity: 0.6; border-color: rgba(255,255,255,0.15);">
-          <div class="reg-name" style="text-decoration: line-through;">Daytime Berberine Stack</div>
-          <div class="reg-sub" style="color: var(--neon-pink);">DISCONTINUED (Cleared Dizziness)</div>
-        </div>
+        <canvas id="scratchCanvas" class="scratch-canvas"></canvas>
+        <div class="scratch-hint">SWIPE / TOUCH TO DE-CLOAK</div>
       </div>
     </section>
 
-    <!-- SECTION 4: TACTILE ACTION PROTOCOL -->
+    <!-- SECTION 5: DAILY INTERACTIVE PROTOCOL -->
     <section class="hud-card" id="protocol">
       <div class="section-header">
         <span class="section-icon">🛡️</span>
-        <h2 class="section-title">Interactive Daily Protocol</h2>
-        <span class="section-pill">TOUCH CHECKLIST</span>
+        <h2 class="section-title">Active Daily Protocol</h2>
+        <span class="section-pill">INTERACTIVE CHECKLIST</span>
       </div>
 
       <div class="checklist">
         <div class="check-item done" onclick="toggleTask(this)">
           <div class="cyber-check">&check;</div>
           <div>
-            <div class="check-title">Removed Daytime Vasodilator Stack</div>
-            <div class="check-desc">Eliminated daytime blood pooling and postural lightheadedness.</div>
+            <div style="font-size: 0.9rem; font-weight: 700; color: #fff;">Discontinued Daytime Vasodilator Stack</div>
+            <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 2px;">Eliminated daytime blood pooling and orthostatic lightheadedness.</div>
+          </div>
+        </div>
+
+        <div class="check-item done" onclick="toggleTask(this)">
+          <div class="cyber-check">&check;</div>
+          <div>
+            <div style="font-size: 0.9rem; font-weight: 700; color: #fff;">Morning Ubiquinol (CoQ10 100–200mg)</div>
+            <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 2px;">Restores myocardial mitochondrial ATP depleted by daily Atorvastatin.</div>
+          </div>
+        </div>
+
+        <div class="check-item done" onclick="toggleTask(this)">
+          <div class="cyber-check">&check;</div>
+          <div>
+            <div style="font-size: 0.9rem; font-weight: 700; color: #fff;">Bedtime Evalar Magnesium L-Threonate</div>
+            <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 2px;">Crosses blood-brain barrier for deep sleep architecture without daytime hypotension.</div>
           </div>
         </div>
 
         <div class="check-item" onclick="toggleTask(this)">
           <div class="cyber-check">&check;</div>
           <div>
-            <div class="check-title">Morning Ubiquinol (Active CoQ10 100–200mg)</div>
-            <div class="check-desc">Direct antidote to statin mitochondrial cardiac fatigue. Taken with breakfast fats.</div>
-          </div>
-        </div>
-
-        <div class="check-item" onclick="toggleTask(this)">
-          <div class="cyber-check">&check;</div>
-          <div>
-            <div class="check-title">Bedtime Evalar Magnesium L-Threonate</div>
-            <div class="check-desc">Penetrates blood-brain barrier for deep restorative sleep without morning hypotension.</div>
-          </div>
-        </div>
-
-        <div class="check-item" onclick="toggleTask(this)">
-          <div class="cyber-check">&check;</div>
-          <div>
-            <div class="check-title">16:8 Fasting Window (12:00 PM – 8:00 PM)</div>
-            <div class="check-desc">Keeps insulin suppressed for 16 hours to trigger visceral fat liquidation.</div>
-          </div>
-        </div>
-
-        <div class="check-item" onclick="toggleTask(this)">
-          <div class="cyber-check">&check;</div>
-          <div>
-            <div class="check-title">3x Weekly Compound Lifting (Leg Muscle Pump)</div>
-            <div class="check-desc">Rebuilds the lost 4.1 lb leg muscle to restore venous return and torch visceral fat.</div>
+            <div style="font-size: 0.9rem; font-weight: 700; color: #fff;">Heavy Compound Lifting (Leg Hypertrophy Focus)</div>
+            <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 2px;">Rebuilding leg muscle restores venous return and torches visceral fat.</div>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Mobile Floating Navigation -->
+  <!-- Mobile Bottom Floating Navigation -->
   <nav class="bottom-bar">
     <button class="nav-btn active" onclick="jumpTo('overview')">
       <span>🌐</span>HUD
     </button>
-    <button class="nav-btn" onclick="jumpTo('symptoms')">
-      <span>⚡</span>Reveal
+    <button class="nav-btn" onclick="jumpTo('timeline')">
+      <span>🗓️</span>Months
+    </button>
+    <button class="nav-btn" onclick="jumpTo('volume')">
+      <span>📊</span>Volume
     </button>
     <button class="nav-btn" onclick="jumpTo('vo2max')">
       <span>📉</span>VO2 Max
     </button>
-    <button class="nav-btn" onclick="jumpTo('training')">
-      <span>🏋️</span>Strength
-    </button>
-    <button class="nav-btn" onclick="jumpTo('regimen')">
-      <span>💊</span>Stack
+    <button class="nav-btn" onclick="jumpTo('symptoms')">
+      <span>⚡</span>Reveal
     </button>
     <button class="nav-btn" onclick="jumpTo('protocol')">
-      <span>🛡️</span>Checklist
+      <span>🛡️</span>Protocol
     </button>
   </nav>
 
-  <!-- ThreeJS Visual Engine -->
+  <!-- ThreeJS Engine & Interactive Scripts -->
   <script>
     const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x030712, 0.04);
+    scene.fog = new THREE.FogExp2(0x030713, 0.04);
 
     const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 16;
@@ -1105,7 +1185,7 @@
       initScratchCanvas();
     });
 
-    // Scratch Canvas
+    // Scratch Foil
     const sCanvas = document.getElementById('scratchCanvas');
     const sCtx = sCanvas.getContext('2d');
     let isScratching = false;
