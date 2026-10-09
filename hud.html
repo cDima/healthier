@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>CYBERNETIC CHRONICLES // QUANTIFIED SELF DOSSIER</title>
+  <title>CYBERNETIC BIO-CORE // QUANTIFIED SELF VISUAL MATRIX</title>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,500;0,700;0,900;1,700&family=JetBrains+Mono:wght@300;400;600;800&family=Space+Grotesk:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,500;0,700;0,900;1,700&family=JetBrains+Mono:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700;900&display=swap" rel="stylesheet">
   
   <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -17,16 +17,16 @@
 
   <style>
     :root {
-      --bg: #030713;
-      --card-bg: rgba(9, 18, 38, 0.85);
-      --card-border: rgba(0, 243, 255, 0.22);
+      --bg: #02050e;
+      --card-bg: rgba(6, 14, 30, 0.88);
+      --card-border: rgba(0, 243, 255, 0.28);
       --neon-cyan: #00f3ff;
       --neon-pink: #ff0055;
       --neon-amber: #ffaa00;
       --neon-green: #00ff66;
       --neon-purple: #b026ff;
       --text-main: #f1f5f9;
-      --text-dim: #94a3b8;
+      --text-dim: #7d8ea3;
       --font-mono: 'JetBrains Mono', monospace;
       --font-display: 'Chakra Petch', sans-serif;
       --font-body: 'Space Grotesk', sans-serif;
@@ -44,13 +44,12 @@
       color: var(--text-main);
       font-family: var(--font-body);
       overflow-x: hidden;
-      line-height: 1.5;
       background-image: 
-        radial-gradient(circle at 50% 12%, rgba(0, 243, 255, 0.08) 0%, transparent 60%),
-        radial-gradient(circle at 85% 65%, rgba(255, 0, 85, 0.07) 0%, transparent 60%),
-        linear-gradient(rgba(0, 243, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 243, 255, 0.02) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+        radial-gradient(circle at 50% 10%, rgba(0, 243, 255, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at 85% 70%, rgba(255, 0, 85, 0.1) 0%, transparent 60%),
+        linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
     }
 
     /* Fixed ThreeJS Layer */
@@ -62,7 +61,7 @@
       height: 100vh;
       z-index: 0;
       pointer-events: none;
-      opacity: 0.85;
+      opacity: 0.95;
     }
 
     .scanlines {
@@ -73,12 +72,12 @@
       height: 100vh;
       z-index: 1;
       pointer-events: none;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.28) 50%);
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
       background-size: 100% 4px;
-      opacity: 0.55;
+      opacity: 0.6;
     }
 
-    /* Header */
+    /* Floating Header */
     header {
       position: fixed;
       top: 0;
@@ -87,9 +86,9 @@
       z-index: 100;
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      background: rgba(3, 7, 19, 0.9);
+      background: rgba(2, 5, 14, 0.9);
       border-bottom: 1px solid rgba(0, 243, 255, 0.25);
-      padding: 12px 20px;
+      padding: 10px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -98,17 +97,23 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       font-family: var(--font-display);
       font-weight: 900;
       letter-spacing: 2px;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: #fff;
     }
 
     .brand-glitch {
       color: var(--neon-cyan);
-      text-shadow: 0 0 14px rgba(0, 243, 255, 0.8);
+      text-shadow: 0 0 14px rgba(0, 243, 255, 0.85);
+      animation: textGlitch 3s infinite;
+    }
+
+    @keyframes textGlitch {
+      0%, 100% { text-shadow: 0 0 12px rgba(0,243,255,0.8); }
+      50% { text-shadow: 0 0 20px rgba(255,0,85,0.9), 0 0 8px rgba(0,243,255,0.8); }
     }
 
     .live-pulse {
@@ -116,13 +121,13 @@
       height: 9px;
       background: var(--neon-green);
       border-radius: 50%;
-      box-shadow: 0 0 10px var(--neon-green);
-      animation: pulse 1.6s infinite;
+      box-shadow: 0 0 12px var(--neon-green);
+      animation: pulse 1.4s infinite;
     }
 
     @keyframes pulse {
       0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.4); opacity: 0.35; }
+      50% { transform: scale(1.5); opacity: 0.3; }
     }
 
     .header-badges {
@@ -134,13 +139,24 @@
     .ha-live-pill {
       font-family: var(--font-mono);
       font-size: 0.68rem;
-      background: rgba(0, 255, 102, 0.1);
+      background: rgba(0, 255, 102, 0.12);
       border: 1px solid var(--neon-green);
       color: var(--neon-green);
       padding: 4px 10px;
       border-radius: 20px;
-      letter-spacing: 1px;
       font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ha-live-pill::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--neon-green);
+      animation: pulse 1.2s infinite;
     }
 
     /* Container */
@@ -149,49 +165,10 @@
       z-index: 10;
       max-width: 760px;
       margin: 0 auto;
-      padding: 85px 18px 120px;
+      padding: 75px 16px 120px;
     }
 
-    .meta-tag {
-      font-family: var(--font-mono);
-      color: var(--neon-cyan);
-      font-size: 0.75rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .meta-tag::before {
-      content: "[DOSSIER // 2-YEAR QUANTIFIED SELF]";
-      color: var(--neon-pink);
-      font-weight: 800;
-    }
-
-    h1.hero-title {
-      font-family: var(--font-display);
-      font-size: 2.8rem;
-      font-weight: 900;
-      line-height: 1.05;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 12px;
-      background: linear-gradient(135deg, #ffffff 40%, var(--neon-cyan) 75%, var(--neon-pink) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 35px rgba(0, 243, 255, 0.35);
-    }
-
-    .hero-subtitle {
-      font-size: 1rem;
-      color: var(--text-dim);
-      margin-bottom: 24px;
-      line-height: 1.5;
-    }
-
-    /* Live Telemetry Ticker */
+    /* Ticker */
     .ticker-bar {
       font-family: var(--font-mono);
       font-size: 0.7rem;
@@ -199,18 +176,19 @@
       color: var(--neon-cyan);
       padding: 7px 12px;
       border-radius: 8px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       display: flex;
       align-items: center;
       gap: 10px;
       overflow: hidden;
       white-space: nowrap;
       border-left: 3px solid var(--neon-cyan);
+      box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
     }
 
     .ticker-content {
       display: inline-block;
-      animation: ticker 32s linear infinite;
+      animation: ticker 28s linear infinite;
     }
 
     @keyframes ticker {
@@ -218,16 +196,31 @@
       100% { transform: translateX(-50%); }
     }
 
+    /* Hero */
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 900;
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #ffffff 40%, var(--neon-cyan) 75%, var(--neon-pink) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 35px rgba(0, 243, 255, 0.35);
+    }
+
     /* 3D Switcher */
     .viewport-ctrl {
-      background: rgba(0, 243, 255, 0.05);
-      border: 1px solid rgba(0, 243, 255, 0.2);
+      background: rgba(0, 243, 255, 0.06);
+      border: 1px solid rgba(0, 243, 255, 0.25);
       border-radius: 30px;
-      padding: 6px 12px;
+      padding: 5px 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 26px;
+      margin: 18px 0 24px;
     }
 
     .vp-btn {
@@ -242,96 +235,17 @@
       transition: all 0.25s ease;
       text-transform: uppercase;
       letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .vp-btn.active {
       background: var(--neon-cyan);
-      color: #030713;
+      color: #02050e;
       font-weight: 800;
-      box-shadow: 0 0 14px rgba(0, 243, 255, 0.6);
+      box-shadow: 0 0 16px rgba(0, 243, 255, 0.7);
     }
-
-    /* Core Matrix Grid */
-    .sensor-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-
-    .sensor-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 14px 16px;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 6px 25px rgba(0,0,0,0.45);
-    }
-
-    .sensor-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 3.5px;
-      height: 100%;
-      background: var(--neon-cyan);
-    }
-
-    .sensor-card.live::before { background: var(--neon-green); }
-    .sensor-card.alert::before { background: var(--neon-pink); }
-    .sensor-card.gold::before { background: var(--neon-amber); }
-
-    .sensor-badge-source {
-      position: absolute;
-      top: 10px;
-      right: 12px;
-      font-family: var(--font-mono);
-      font-size: 0.58rem;
-      background: rgba(255, 255, 255, 0.06);
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: var(--text-dim);
-    }
-
-    .sensor-label {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .sensor-val {
-      font-family: var(--font-display);
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: #fff;
-      margin-top: 3px;
-      display: flex;
-      align-items: baseline;
-      gap: 4px;
-    }
-
-    .sensor-unit {
-      font-size: 0.8rem;
-      font-family: var(--font-mono);
-      color: var(--text-dim);
-    }
-
-    .sensor-sub {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      margin-top: 4px;
-    }
-
-    .c-green { color: var(--neon-green); }
-    .c-pink { color: var(--neon-pink); }
-    .c-cyan { color: var(--neon-cyan); }
-    .c-amber { color: var(--neon-amber); }
 
     /* HUD Section Cards */
     .hud-card {
@@ -339,12 +253,18 @@
       border: 1px solid var(--card-border);
       border-radius: 20px;
       padding: 22px 18px;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 10px 35px rgba(0,0,0,0.55);
-      margin-bottom: 28px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.65);
+      margin-bottom: 24px;
       position: relative;
       overflow: hidden;
+      animation: cardGlow 6s infinite alternate;
+    }
+
+    @keyframes cardGlow {
+      0% { border-color: rgba(0, 243, 255, 0.2); box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+      100% { border-color: rgba(0, 243, 255, 0.38); box-shadow: 0 10px 45px rgba(0, 243, 255, 0.12); }
     }
 
     .hud-card::after {
@@ -354,7 +274,7 @@
       right: 0;
       width: 45px;
       height: 45px;
-      background: linear-gradient(135deg, transparent 50%, rgba(0, 243, 255, 0.25) 50%);
+      background: linear-gradient(135deg, transparent 50%, rgba(0, 243, 255, 0.3) 50%);
       pointer-events: none;
     }
 
@@ -362,13 +282,14 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       padding-bottom: 12px;
     }
 
     .section-icon {
-      font-size: 1.35rem;
+      font-size: 1.4rem;
+      filter: drop-shadow(0 0 8px var(--neon-cyan));
     }
 
     .section-title {
@@ -382,70 +303,174 @@
     .section-pill {
       margin-left: auto;
       font-family: var(--font-mono);
-      font-size: 0.64rem;
+      font-size: 0.65rem;
       padding: 3px 8px;
       border-radius: 4px;
-      background: rgba(0, 243, 255, 0.08);
+      background: rgba(0, 243, 255, 0.1);
       color: var(--neon-cyan);
-      border: 1px solid rgba(0, 243, 255, 0.3);
+      border: 1px solid rgba(0, 243, 255, 0.35);
       font-weight: 700;
     }
 
-    /* Interactive Timeline Carousel / Scroller */
-    .timeline-scroller {
+    /* VISUAL GAUGES & METRIC DIALS */
+    .gauge-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    @media (min-width: 580px) {
+      .gauge-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .gauge-card {
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 14px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+
+    .gauge-card:hover {
+      border-color: var(--neon-cyan);
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+    }
+
+    .gauge-svg {
+      width: 90px;
+      height: 90px;
+      transform: rotate(-90deg);
+    }
+
+    .gauge-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.08);
+      stroke-width: 7;
+    }
+
+    .gauge-progress {
+      fill: none;
+      stroke-width: 7;
+      stroke-linecap: round;
+      stroke-dasharray: 220;
+      stroke-dashoffset: 220;
+      transition: stroke-dashoffset 1.8s ease;
+    }
+
+    .gauge-center-text {
+      position: absolute;
+      top: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .gauge-num {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .gauge-unit {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    .gauge-label {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #fff;
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    .gauge-sub {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      margin-top: 2px;
+      text-align: center;
+    }
+
+    /* PULSING SVG CHARTS */
+    .chart-box {
+      background: rgba(0,0,0,0.5);
+      border-radius: 16px;
+      padding: 16px 12px;
+      border: 1px solid rgba(0, 243, 255, 0.2);
+      margin-top: 12px;
+      position: relative;
+    }
+
+    .glow-curve {
+      filter: drop-shadow(0 0 8px currentColor);
+    }
+
+    .chart-radar {
+      stroke-dasharray: 4;
+      animation: radarDash 25s linear infinite;
+    }
+
+    @keyframes radarDash {
+      to { stroke-dashoffset: -1000; }
+    }
+
+    /* HORIZONTAL CAROUSEL TILES */
+    .carousel-track {
       display: flex;
       gap: 12px;
       overflow-x: auto;
-      padding: 10px 4px 16px;
+      padding: 8px 4px 16px;
       scroll-snap-type: x mandatory;
       scrollbar-width: thin;
       scrollbar-color: var(--neon-cyan) rgba(0,0,0,0.5);
     }
 
-    .timeline-scroller::-webkit-scrollbar {
+    .carousel-track::-webkit-scrollbar {
       height: 6px;
     }
-    .timeline-scroller::-webkit-scrollbar-thumb {
+    .carousel-track::-webkit-scrollbar-thumb {
       background: var(--neon-cyan);
       border-radius: 4px;
     }
 
     .month-tile {
-      flex: 0 0 200px;
+      flex: 0 0 210px;
       scroll-snap-align: start;
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 14px;
       transition: all 0.25s ease;
       position: relative;
     }
 
-    .month-tile:hover, .month-tile.active-month {
-      background: rgba(0, 243, 255, 0.06);
+    .month-tile:hover {
+      background: rgba(0, 243, 255, 0.08);
       border-color: var(--neon-cyan);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
     }
 
-    .month-tile.peak-month {
-      border-color: var(--neon-green);
-      background: rgba(0, 255, 102, 0.05);
-    }
-
-    .month-tile.dip-month {
-      border-color: var(--neon-pink);
-      background: rgba(255, 0, 85, 0.05);
-    }
-
-    .tile-month-name {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: #fff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
+    .tile-sparkline {
+      width: 100%;
+      height: 35px;
+      margin: 8px 0;
     }
 
     .tile-badge {
@@ -453,37 +478,25 @@
       font-size: 0.6rem;
       padding: 2px 6px;
       border-radius: 4px;
+      font-weight: 700;
       text-transform: uppercase;
     }
 
-    .tile-stat-row {
-      display: flex;
-      justify-content: space-between;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      margin-bottom: 4px;
-    }
-
-    .tile-stat-val {
-      color: #fff;
-      font-weight: 700;
-    }
-
-    /* Scratch Foil Canvas */
+    /* Scratch Foil */
     .scratch-container {
       position: relative;
       width: 100%;
       min-height: 190px;
-      border-radius: 12px;
+      border-radius: 14px;
       overflow: hidden;
-      margin: 16px 0;
-      border: 1px dashed rgba(0, 243, 255, 0.4);
+      margin: 12px 0;
+      border: 1px dashed rgba(0, 243, 255, 0.45);
+      box-shadow: 0 0 25px rgba(255, 0, 85, 0.15);
     }
 
     .scratch-underlay {
       padding: 20px 18px;
-      background: linear-gradient(135deg, rgba(255, 0, 85, 0.18), rgba(0, 243, 255, 0.12));
+      background: linear-gradient(135deg, rgba(255, 0, 85, 0.22), rgba(0, 243, 255, 0.15));
       color: #fff;
     }
 
@@ -507,32 +520,24 @@
       color: var(--neon-cyan);
       z-index: 3;
       pointer-events: none;
-      background: rgba(3, 7, 19, 0.85);
+      background: rgba(2, 5, 14, 0.88);
       padding: 3px 8px;
       border-radius: 4px;
-      border: 1px solid rgba(0, 243, 255, 0.3);
+      border: 1px solid rgba(0, 243, 255, 0.4);
+      animation: pulse 1.8s infinite;
     }
 
-    /* Bar Chart Component */
-    .bar-chart-container {
-      background: rgba(0,0,0,0.4);
-      padding: 16px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.06);
-      margin-top: 14px;
-    }
-
-    /* Bottom Floating Nav */
+    /* Bottom Nav */
     .bottom-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
       z-index: 100;
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      background: rgba(3, 7, 19, 0.9);
-      border-top: 1px solid rgba(0, 243, 255, 0.2);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(2, 5, 14, 0.92);
+      border-top: 1px solid rgba(0, 243, 255, 0.25);
       padding: 10px 16px 22px;
       display: flex;
       justify-content: space-around;
@@ -551,15 +556,23 @@
       align-items: center;
       gap: 2px;
       text-transform: uppercase;
+      transition: all 0.2s;
     }
 
     .nav-btn.active, .nav-btn:hover {
       color: var(--neon-cyan);
+      text-shadow: 0 0 10px var(--neon-cyan);
     }
 
     .nav-btn span {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
     }
+
+    /* Pulse Colors */
+    .c-green { color: var(--neon-green); text-shadow: 0 0 10px rgba(0,255,102,0.6); }
+    .c-pink { color: var(--neon-pink); text-shadow: 0 0 10px rgba(255,0,85,0.6); }
+    .c-cyan { color: var(--neon-cyan); text-shadow: 0 0 10px rgba(0,243,255,0.6); }
+    .c-amber { color: var(--neon-amber); text-shadow: 0 0 10px rgba(255,170,0,0.6); }
 
     /* Interactive checklist */
     .checklist {
@@ -571,39 +584,38 @@
 
     .check-item {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 12px;
-      padding: 13px 14px;
+      padding: 12px 14px;
       background: rgba(0, 243, 255, 0.03);
       border: 1px solid rgba(0, 243, 255, 0.15);
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
       transition: all 0.2s ease;
     }
 
     .check-item.done {
       border-color: var(--neon-green);
-      background: rgba(0, 255, 102, 0.05);
+      background: rgba(0, 255, 102, 0.06);
     }
 
     .cyber-check {
-      min-width: 20px;
-      height: 20px;
+      min-width: 22px;
+      height: 22px;
       border: 1px solid var(--neon-cyan);
-      border-radius: 4px;
-      margin-top: 2px;
+      border-radius: 5px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
+      font-size: 13px;
       color: var(--neon-green);
     }
 
     .check-item.done .cyber-check {
       background: var(--neon-green);
-      color: #030713;
+      color: #02050e;
       border-color: var(--neon-green);
-      font-weight: 800;
+      font-weight: 900;
     }
   </style>
 </head>
@@ -617,7 +629,7 @@
   <header>
     <div class="brand">
       <span class="live-pulse"></span>
-      <span class="brand-glitch">CHRONICLES // QUANTIFIED SELF</span>
+      <span class="brand-glitch">BIO-CORE // CYBERNETIC</span>
     </div>
     <div class="header-badges">
       <span class="ha-live-pill">HA: 74.3 KG (163.8 LB)</span>
@@ -627,307 +639,114 @@
   <main>
     <!-- Telemetry Ticker -->
     <div class="ticker-bar">
-      <span style="color: var(--neon-pink); font-weight: 800;">[CHRONICLES]</span>
+      <span style="color: var(--neon-pink); font-weight: 800;">[STREAM]</span>
       <div class="ticker-content">
-        717 STRAVA ARCHIVES &bull; 1,131 APPLE WORKOUTS &bull; 7 BODY置PEC SCANS &bull; OCT '25 PEAK: VO2 45.9 / RUNS 91 KM / LEAN 119.9 LB &bull; MID-2026 DIP: VO2 36.5 / LEAN 109.1 LB &bull; OCT '26 STRENGTH PIVOT ACTIVE &bull; 
+        717 STRAVA ARCHIVES &bull; 1,131 APPLE SESSIONS &bull; 7 BODY置PEC SCANS &bull; OCT '25 PEAK: VO2 45.9 / RUNS 91 KM / LEAN 119.9 LB &bull; MID-2026 DIP: VO2 36.5 / LEAN 109.1 LB &bull; OCT '26 STRENGTH PIVOT ACTIVE &bull; 
       </div>
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero-section" id="overview">
-      <div class="meta-tag">2-YEAR LONGITUDINAL BIO-METRIC DOSSIER</div>
-      <h1 class="hero-title">QUANTIFIED<br><span style="color: var(--neon-cyan)">SELF MATRIX</span></h1>
-      <p class="hero-subtitle">
-        A dynamic, scroll-activated chronological breakdown compiling all recorded runs, strength sessions, VO2 max shifts, resting heart rates, DEXA scans, and blood turnaround data over the past 21 months.
-      </p>
+    <!-- Hero Title & Mode Switcher -->
+    <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+      <h1 class="hero-title">BIO-DIGITAL <span style="color: var(--neon-cyan)">TWIN</span></h1>
+      <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--neon-green);">&bull; LIVE TELEMETRY</span>
+    </div>
 
-      <!-- 3D Switcher Control Bar -->
-      <div class="viewport-ctrl">
-        <button class="vp-btn active" onclick="set3DMode('heart')">Cardiac Core</button>
-        <button class="vp-btn" onclick="set3DMode('anatomy')">Kinetic Wireframe</button>
-        <button class="vp-btn" onclick="set3DMode('cellular')">Mitochondria</button>
-      </div>
+    <!-- 3D Switcher Control Bar -->
+    <div class="viewport-ctrl">
+      <button class="vp-btn active" onclick="set3DMode('heart')">❤️ Cardiac Core</button>
+      <button class="vp-btn" onclick="set3DMode('anatomy')">🧬 Kinetic Wireframe</button>
+      <button class="vp-btn" onclick="set3DMode('cellular')">⚡ Mitochondria</button>
+    </div>
 
-      <!-- Core Sensor Summary Cards -->
-      <div class="sensor-grid">
-        <div class="sensor-card live">
-          <span class="sensor-badge-source">HOME ASSISTANT</span>
-          <div class="sensor-label">Current Scale Weight</div>
-          <div class="sensor-val">74.3 <span class="sensor-unit">kg</span></div>
-          <div class="sensor-sub c-green">163.8 lb &bull; Live Network Polling</div>
-        </div>
-
-        <div class="sensor-card live">
-          <span class="sensor-badge-source">HOME ASSISTANT</span>
-          <div class="sensor-label">Lean Body Mass</div>
-          <div class="sensor-val">61.1 <span class="sensor-unit">kg</span></div>
-          <div class="sensor-sub c-cyan">134.7 lb &bull; Rebuilding Stage</div>
-        </div>
-
-        <div class="sensor-card alert">
-          <span class="sensor-badge-source">DEXA SCAN</span>
-          <div class="sensor-label">Visceral Fat (VAT)</div>
-          <div class="sensor-val">2.97 <span class="sensor-unit">lb</span></div>
-          <div class="sensor-sub c-pink">1,347g &bull; Liquidation Target &lt; 1.0 lb</div>
-        </div>
-
-        <div class="sensor-card gold">
-          <span class="sensor-badge-source">LAB RESULTS</span>
-          <div class="sensor-label">Liver ALT Recovery</div>
-          <div class="sensor-val">34 <span class="sensor-unit">U/L</span></div>
-          <div class="sensor-sub c-green">&check; Normalized from 71 U/L</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 1: INTERACTIVE MONTHLY CHRONICLES CAROUSEL -->
-    <section class="hud-card" id="timeline">
+    <!-- SECTION 1: ANIMATED CIRCULAR RADIAL DIALS (4 CORE VITALS) -->
+    <section class="hud-card" id="overview">
       <div class="section-header">
-        <span class="section-icon">🗓️</span>
-        <h2 class="section-title">Monthly Chronicles</h2>
-        <span class="section-pill">SWIPE MONTHS &rarr;</span>
+        <span class="section-icon">🎛️</span>
+        <h2 class="section-title">Telemetry Dials</h2>
+        <span class="section-pill">LIVE SENSORS</span>
       </div>
 
-      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 12px;">
-        Scroll horizontally through every month from <strong>January 2025 to Present</strong> to see mileage, workout counts, resting HR, and VO2 max shifts:
-      </p>
-
-      <!-- Carousel Cards -->
-      <div class="timeline-scroller">
-        <!-- Jan 2025 -->
-        <div class="month-tile">
-          <div class="tile-month-name">
-            <span>Jan 2025</span>
-            <span class="tile-badge" style="background: rgba(0,243,255,0.15); color: var(--neon-cyan);">73 Workouts</span>
+      <div class="gauge-grid">
+        <!-- Scale Weight Gauge -->
+        <div class="gauge-card">
+          <svg class="gauge-svg" viewBox="0 0 80 80">
+            <circle class="gauge-bg" cx="40" cy="40" r="32"/>
+            <circle class="gauge-progress" cx="40" cy="40" r="32" stroke="#00ff66" style="stroke-dashoffset: 45; filter: drop-shadow(0 0 6px #00ff66);"/>
+          </svg>
+          <div class="gauge-center-text">
+            <span class="gauge-num">74.3</span>
+            <span class="gauge-unit">KG</span>
           </div>
-          <div class="tile-stat-row"><span>Runs:</span><span class="tile-stat-val">23 (83.4 km)</span></div>
-          <div class="tile-stat-row"><span>Strength:</span><span class="tile-stat-val">22 sessions</span></div>
-          <div class="tile-stat-row"><span>Avg Steps:</span><span class="tile-stat-val">6,786 / day</span></div>
-          <div class="tile-stat-row"><span>Resting HR:</span><span class="tile-stat-val">65.6 bpm</span></div>
-          <div class="tile-stat-row"><span>VO2 Max:</span><span class="tile-stat-val">42.1</span></div>
+          <div class="gauge-label">Scale Weight</div>
+          <div class="gauge-sub c-green">163.8 LB &bull; HA Live</div>
         </div>
 
-        <!-- Mar 2025 -->
-        <div class="month-tile">
-          <div class="tile-month-name">
-            <span>Mar 2025</span>
-            <span class="tile-badge" style="background: rgba(0,255,102,0.15); color: var(--neon-green);">Run Peak</span>
+        <!-- Lean Muscle Mass Gauge -->
+        <div class="gauge-card">
+          <svg class="gauge-svg" viewBox="0 0 80 80">
+            <circle class="gauge-bg" cx="40" cy="40" r="32"/>
+            <circle class="gauge-progress" cx="40" cy="40" r="32" stroke="#00f3ff" style="stroke-dashoffset: 65; filter: drop-shadow(0 0 6px #00f3ff);"/>
+          </svg>
+          <div class="gauge-center-text">
+            <span class="gauge-num">61.1</span>
+            <span class="gauge-unit">KG</span>
           </div>
-          <div class="tile-stat-row"><span>Runs:</span><span class="tile-stat-val c-green">26 (125.6 km)</span></div>
-          <div class="tile-stat-row"><span>Cycling:</span><span class="tile-stat-val">3 (36.8 km)</span></div>
-          <div class="tile-stat-row"><span>Avg Steps:</span><span class="tile-stat-val">8,123 / day</span></div>
-          <div class="tile-stat-row"><span>Resting HR:</span><span class="tile-stat-val">66.5 bpm</span></div>
-          <div class="tile-stat-row"><span>VO2 Max:</span><span class="tile-stat-val">43.0</span></div>
+          <div class="gauge-label">Lean Mass</div>
+          <div class="gauge-sub c-cyan">134.7 LB &bull; Rebuilding</div>
         </div>
 
-        <!-- May 2025: All Time Fitness Peak -->
-        <div class="month-tile peak-month">
-          <div class="tile-month-name">
-            <span class="c-green">May 2025 🏆</span>
-            <span class="tile-badge" style="background: var(--neon-green); color: #030713; font-weight: 800;">DEXA PEAK</span>
+        <!-- VO2 Max Index Gauge -->
+        <div class="gauge-card">
+          <svg class="gauge-svg" viewBox="0 0 80 80">
+            <circle class="gauge-bg" cx="40" cy="40" r="32"/>
+            <circle class="gauge-progress" cx="40" cy="40" r="32" stroke="#ff0055" style="stroke-dashoffset: 95; filter: drop-shadow(0 0 6px #ff0055);"/>
+          </svg>
+          <div class="gauge-center-text">
+            <span class="gauge-num">36.5</span>
+            <span class="gauge-unit">ML/KG</span>
           </div>
-          <div class="tile-stat-row"><span>Runs:</span><span class="tile-stat-val c-green">24 (117.5 km)</span></div>
-          <div class="tile-stat-row"><span>Lean Mass:</span><span class="tile-stat-val c-green">119.9 lb (Peak)</span></div>
-          <div class="tile-stat-row"><span>VAT Fat:</span><span class="tile-stat-val c-green">2.80 lb (Lowest)</span></div>
-          <div class="tile-stat-row"><span>VO2 Max:</span><span class="tile-stat-val c-green">46.0 (Top 15%)</span></div>
-          <div class="tile-stat-row"><span>Avg Steps:</span><span class="tile-stat-val">11,190 / day</span></div>
+          <div class="gauge-label">VO2 Max</div>
+          <div class="gauge-sub c-pink">-20% Dip &bull; 45.9 Peak</div>
         </div>
 
-        <!-- Jul 2025: Cycling Peak -->
-        <div class="month-tile">
-          <div class="tile-month-name">
-            <span>Jul 2025</span>
-            <span class="tile-badge" style="background: rgba(0,243,255,0.15); color: var(--neon-cyan);">Ride Peak</span>
+        <!-- Visceral Fat Gauge -->
+        <div class="gauge-card">
+          <svg class="gauge-svg" viewBox="0 0 80 80">
+            <circle class="gauge-bg" cx="40" cy="40" r="32"/>
+            <circle class="gauge-progress" cx="40" cy="40" r="32" stroke="#ffaa00" style="stroke-dashoffset: 75; filter: drop-shadow(0 0 6px #ffaa00);"/>
+          </svg>
+          <div class="gauge-center-text">
+            <span class="gauge-num">2.97</span>
+            <span class="gauge-unit">LB</span>
           </div>
-          <div class="tile-stat-row"><span>Rides:</span><span class="tile-stat-val c-cyan">17 (328.2 km)</span></div>
-          <div class="tile-stat-row"><span>Runs:</span><span class="tile-stat-val">7 (32.6 km)</span></div>
-          <div class="tile-stat-row"><span>Strength:</span><span class="tile-stat-val">9 sessions</span></div>
-          <div class="tile-stat-row"><span>Resting HR:</span><span class="tile-stat-val c-cyan">61.2 bpm</span></div>
-          <div class="tile-stat-row"><span>Avg Sleep:</span><span class="tile-stat-val">8.8 h / night</span></div>
-        </div>
-
-        <!-- Sep 2025: Second Running Wave -->
-        <div class="month-tile">
-          <div class="tile-month-name">
-            <span>Sep 2025</span>
-            <span class="tile-badge" style="background: rgba(0,255,102,0.15); color: var(--neon-green);">Volume Wave</span>
-          </div>
-          <div class="tile-stat-row"><span>Runs:</span><span class="tile-stat-val">16 (133.0 km)</span></div>
-          <div class="tile-stat-row"><span>Strength:</span><span class="tile-stat-val">15 sessions</span></div>
-          <div class="tile-stat-row"><span>Rides:</span><span class="tile-stat-val">6 (83.0 km)</span></div>
-          <div class="tile-stat-row"><span>VO2 Max:</span><span class="tile-stat-val c-green">46.3 (Peak)</span></div>
-          <div class="tile-stat-row"><span>Resting HR:</span><span class="tile-stat-val">59.5 bpm</span></div>
-        </div>
-
-        <!-- Oct 2025 -->
-        <div class="month-tile">
-          <div class="tile-month-name">
-            <span>Oct 2025</span>
-            <span class="tile-badge" style="background: rgba(0,243,255,0.15); color: var(--neon-cyan);">High Output</span>
-          </div>
-          <div class="tile-stat-row"><span>Runs:</span><span class="tile-stat-val">11 (91.0 km)</span></div>
-          <div class="tile-stat-row"><span>Strength:</span><span class="tile-stat-val">16 sessions</span></div>
-          <div class="tile-stat-row"><span>DEXA Lean:</span><span class="tile-stat-val">118.6 lb</span></div>
-          <div class="tile-stat-row"><span>VO2 Max:</span><span class="tile-stat-val">45.4</span></div>
-          <div class="tile-stat-row"><span>Avg Steps:</span><span class="tile-stat-val">9,645 / day</span></div>
-        </div>
-
-        <!-- Mar 2026: The Slowdown Begins -->
-        <div class="month-tile dip-month">
-          <div class="tile-month-name">
-            <span>Mar 2026</span>
-            <span class="tile-badge" style="background: rgba(255,0,85,0.2); color: var(--neon-pink);">Deceleration</span>
-          </div>
-          <div class="tile-stat-row"><span>Runs:</span><span class="tile-stat-val c-pink">4 (14.1 km)</span></div>
-          <div class="tile-stat-row"><span>Strength:</span><span class="tile-stat-val">2 sessions</span></div>
-          <div class="tile-stat-row"><span>VO2 Max:</span><span class="tile-stat-val c-pink">39.9 &darr;</span></div>
-          <div class="tile-stat-row"><span>Avg Active kcal:</span><span class="tile-stat-val">298 kcal / day</span></div>
-        </div>
-
-        <!-- May 2026: The Low Point -->
-        <div class="month-tile dip-month">
-          <div class="tile-month-name">
-            <span>May 2026</span>
-            <span class="tile-badge" style="background: var(--neon-pink); color: #fff;">Sabbatical</span>
-          </div>
-          <div class="tile-stat-row"><span>Runs:</span><span class="tile-stat-val c-pink">0 (0.0 km)</span></div>
-          <div class="tile-stat-row"><span>Resting HR:</span><span class="tile-stat-val c-pink">69.2 bpm &uarr;</span></div>
-          <div class="tile-stat-row"><span>VO2 Max:</span><span class="tile-stat-val c-pink">36.4 &darr;</span></div>
-          <div class="tile-stat-row"><span>Avg Sleep:</span><span class="tile-stat-val">5.4 h / night</span></div>
-        </div>
-
-        <!-- Sep 2026: The Rapid Scale Drop -->
-        <div class="month-tile dip-month">
-          <div class="tile-month-name">
-            <span>Sep 2026</span>
-            <span class="tile-badge" style="background: rgba(255,0,85,0.2); color: var(--neon-pink);">-7.8 lb Drop</span>
-          </div>
-          <div class="tile-stat-row"><span>Scale Weight:</span><span class="tile-stat-val c-pink">169.3 lb</span></div>
-          <div class="tile-stat-row"><span>Lean Mass:</span><span class="tile-stat-val c-pink">109.1 lb (-10.8 lb)</span></div>
-          <div class="tile-stat-row"><span>Visceral Fat:</span><span class="tile-stat-val c-pink">2.97 lb (Trapped)</span></div>
-          <div class="tile-stat-row"><span>Symptoms:</span><span class="tile-stat-val c-pink">Dizziness / Weak Heart</span></div>
-        </div>
-
-        <!-- Oct 2026: The Strength Pivot -->
-        <div class="month-tile peak-month">
-          <div class="tile-month-name">
-            <span class="c-green">Oct 2026 🛡️</span>
-            <span class="tile-badge" style="background: var(--neon-green); color: #030713; font-weight: 800;">ACTIVE NOW</span>
-          </div>
-          <div class="tile-stat-row"><span>Running:</span><span class="tile-stat-val" style="color: var(--text-dim);">Paused (No Wasting)</span></div>
-          <div class="tile-stat-row"><span>Training:</span><span class="tile-stat-val c-green">Heavy Strength Active</span></div>
-          <div class="tile-stat-row"><span>Regimen:</span><span class="tile-stat-val c-green">+ Ubiquinol & Mg Threonate</span></div>
-          <div class="tile-stat-row"><span>Vasodilators:</span><span class="tile-stat-val c-green">Discontinued</span></div>
-          <div class="tile-stat-row"><span>Live Weight:</span><span class="tile-stat-val c-green">74.3 kg (163.8 lb)</span></div>
+          <div class="gauge-label">Visceral Fat</div>
+          <div class="gauge-sub c-amber">Target: &lt; 1.0 LB</div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 2: 2-YEAR RUNNING & WORKOUT MILEAGE BAR CHART -->
-    <section class="hud-card" id="volume">
-      <div class="section-header">
-        <span class="section-icon">📊</span>
-        <h2 class="section-title">Longitudinal Monthly Distance</h2>
-        <span class="section-pill">STRAVA ARCHIVE</span>
-      </div>
-
-      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 12px;">
-        Monthly Running (Cyan) vs Cycling (Pink) kilometers logged over the last 21 months:
-      </p>
-
-      <div class="bar-chart-container">
-        <svg viewBox="0 0 540 220" width="100%" height="auto" style="overflow: visible;">
-          <!-- Grid lines -->
-          <line x1="40" y1="30" x2="520" y2="30" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
-          <line x1="40" y1="80" x2="520" y2="80" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
-          <line x1="40" y1="130" x2="520" y2="130" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
-          <line x1="40" y1="180" x2="520" y2="180" stroke="rgba(255,255,255,0.1)"/>
-
-          <!-- Y-axis labels -->
-          <text x="35" y="34" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="end">300 km</text>
-          <text x="35" y="84" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="end">200 km</text>
-          <text x="35" y="134" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="end">100 km</text>
-          <text x="35" y="184" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="end">0</text>
-
-          <!-- Bars for 2025 -->
-          <!-- Jan '25: Run 83.4 km -->
-          <rect x="52" y="138" width="16" height="42" fill="#00f3ff" rx="3"/>
-          <text x="60" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">J</text>
-
-          <!-- Mar '25: Run 125.6 km, Ride 36.8 km -->
-          <rect x="92" y="117" width="16" height="63" fill="#00f3ff" rx="3"/>
-          <rect x="110" y="161" width="10" height="19" fill="#ff0055" rx="2"/>
-          <text x="104" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">M</text>
-
-          <!-- May '25: Run 117.5 km -->
-          <rect x="136" y="121" width="16" height="59" fill="#00f3ff" rx="3"/>
-          <text x="144" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">M</text>
-
-          <!-- Jul '25: Ride 328.2 km, Run 32.6 km -->
-          <rect x="176" y="16" width="18" height="164" fill="#ff0055" rx="3"/>
-          <rect x="196" y="163" width="12" height="17" fill="#00f3ff" rx="2"/>
-          <text x="190" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">J '25</text>
-
-          <!-- Sep '25: Run 133.0 km, Ride 83.0 km -->
-          <rect x="224" y="113" width="16" height="67" fill="#00f3ff" rx="3"/>
-          <rect x="242" y="138" width="12" height="42" fill="#ff0055" rx="2"/>
-          <text x="236" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">S</text>
-
-          <!-- Nov '25: Run 105.6 km -->
-          <rect x="270" y="127" width="16" height="53" fill="#00f3ff" rx="3"/>
-          <text x="278" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">N</text>
-
-          <!-- Jan '26: Run 53.5 km -->
-          <rect x="314" y="153" width="16" height="27" fill="#00f3ff" rx="3"/>
-          <text x="322" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">J '26</text>
-
-          <!-- Mar '26: Run 14.1 km -->
-          <rect x="358" y="173" width="16" height="7" fill="#00f3ff" rx="3"/>
-          <text x="366" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">M</text>
-
-          <!-- Jul '26: Ride 225.9 km, Run 33.9 km -->
-          <rect x="402" y="67" width="18" height="113" fill="#ff0055" rx="3"/>
-          <rect x="422" y="163" width="12" height="17" fill="#00f3ff" rx="2"/>
-          <text x="416" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">J</text>
-
-          <!-- Sep '26: Run 18.5 km -->
-          <rect x="450" y="170" width="16" height="10" fill="#00f3ff" rx="3"/>
-          <text x="458" y="196" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">S</text>
-
-          <!-- Oct '26: Strength Pivot (Green highlight) -->
-          <rect x="490" y="120" width="22" height="60" fill="#00ff66" rx="4"/>
-          <text x="501" y="196" fill="#00ff66" font-size="8" font-family="JetBrains Mono" font-weight="700" text-anchor="middle">OCT</text>
-          <text x="501" y="112" fill="#00ff66" font-size="8" font-family="Chakra Petch" font-weight="800" text-anchor="middle">LIFT</text>
-        </svg>
-
-        <!-- Legend -->
-        <div style="display: flex; justify-content: center; gap: 20px; font-family: var(--font-mono); font-size: 0.72rem; margin-top: 10px;">
-          <div style="display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: #00f3ff; border-radius: 2px;"></span> Running (km)</div>
-          <div style="display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: #ff0055; border-radius: 2px;"></span> Cycling (km)</div>
-          <div style="display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: #00ff66; border-radius: 2px;"></span> Strength Pivot</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 3: THE VO2 MAX & MUSCLE DROP EXPLAINER -->
+    <!-- SECTION 2: PULSING CYBERNETIC VO2 MAX CURVE -->
     <section class="hud-card" id="vo2max">
       <div class="section-header">
-        <span class="section-icon">📉</span>
-        <h2 class="section-title">VO2 Max & Muscle Telemetry</h2>
-        <span class="section-pill">DEXA &times; APPLE DATA</span>
+        <span class="section-icon">📈</span>
+        <h2 class="section-title">VO2 Max Dynamic Trajectory</h2>
+        <span class="section-pill">COLLAPSE &times; REBUILD</span>
       </div>
 
-      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 12px;">
-        Historical trajectory curve showing how the 20% drop in VO2 max mirrored the loss of 10.8 lb of skeletal muscle:
-      </p>
-
-      <div class="bar-chart-container">
+      <div class="chart-box">
         <svg viewBox="0 0 520 220" width="100%" height="auto" style="overflow: visible;">
           <defs>
-            <linearGradient id="vo2DropGrad2" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#ff0055" stop-opacity="0.35"/>
+            <linearGradient id="vo2GlowGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ff0055" stop-opacity="0.4"/>
               <stop offset="100%" stop-color="#ff0055" stop-opacity="0.0"/>
             </linearGradient>
+            <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
           </defs>
 
           <!-- Grid Lines -->
@@ -936,134 +755,289 @@
           <line x1="45" y1="155" x2="495" y2="155" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
 
           <!-- Axis Labels -->
-          <text x="40" y="39" fill="#94a3b8" font-size="10" font-family="JetBrains Mono" text-anchor="end">46.0</text>
-          <text x="40" y="99" fill="#94a3b8" font-size="10" font-family="JetBrains Mono" text-anchor="end">41.0</text>
-          <text x="40" y="159" fill="#94a3b8" font-size="10" font-family="JetBrains Mono" text-anchor="end">36.0</text>
+          <text x="40" y="39" fill="#7d8ea3" font-size="10" font-family="JetBrains Mono" text-anchor="end">46.0</text>
+          <text x="40" y="99" fill="#7d8ea3" font-size="10" font-family="JetBrains Mono" text-anchor="end">41.0</text>
+          <text x="40" y="159" fill="#7d8ea3" font-size="10" font-family="JetBrains Mono" text-anchor="end">36.0</text>
 
-          <!-- Area -->
-          <path d="M 55 36 L 115 38 L 175 58 L 235 106 L 295 103 L 355 125 L 415 152 L 415 185 L 55 185 Z" fill="url(#vo2DropGrad2)"/>
+          <!-- Gradient Fill -->
+          <path d="M 55 36 L 115 38 L 175 58 L 235 106 L 295 103 L 355 125 L 415 152 L 415 185 L 55 185 Z" fill="url(#vo2GlowGrad)"/>
           
-          <!-- Line -->
-          <path d="M 55 36 L 115 38 L 175 58 L 235 106 L 295 103 L 355 125 L 415 152" fill="none" stroke="#ff0055" stroke-width="3" stroke-linecap="round"/>
+          <!-- Plunging Path with Neon Glow -->
+          <path d="M 55 36 L 115 38 L 175 58 L 235 106 L 295 103 L 355 125 L 415 152" fill="none" stroke="#ff0055" stroke-width="3.5" filter="url(#neonGlow)" stroke-linecap="round"/>
 
-          <!-- Projected Recovery Curve -->
-          <path d="M 415 152 Q 455 105 495 50" fill="none" stroke="#00ff66" stroke-width="2.5" stroke-dasharray="6,4"/>
+          <!-- Projected Rebuild Curve -->
+          <path d="M 415 152 Q 455 105 495 50" fill="none" stroke="#00ff66" stroke-width="3" stroke-dasharray="6,4" filter="url(#neonGlow)"/>
 
-          <!-- Points -->
-          <circle cx="55" cy="36" r="5" fill="#00f3ff" stroke="#fff" stroke-width="2"/>
-          <text x="55" y="24" fill="#00f3ff" font-size="10" font-family="Chakra Petch" font-weight="800" text-anchor="middle">PEAK 45.9</text>
+          <!-- Peak Node -->
+          <circle cx="55" cy="36" r="6" fill="#00f3ff" stroke="#fff" stroke-width="2" filter="url(#neonGlow)"/>
+          <text x="55" y="22" fill="#00f3ff" font-size="11" font-family="Chakra Petch" font-weight="900" text-anchor="middle">PEAK 45.9</text>
 
-          <circle cx="415" cy="152" r="5" fill="#ff0055" stroke="#fff" stroke-width="2"/>
-          <text x="415" y="174" fill="#ff0055" font-size="10" font-family="Chakra Petch" font-weight="800" text-anchor="middle">DIP 36.5 (-20%)</text>
+          <!-- Dip Node -->
+          <circle cx="415" cy="152" r="6" fill="#ff0055" stroke="#fff" stroke-width="2" filter="url(#neonGlow)"/>
+          <text x="415" y="176" fill="#ff0055" font-size="11" font-family="Chakra Petch" font-weight="900" text-anchor="middle">DIP 36.5</text>
 
-          <circle cx="495" cy="50" r="5" fill="#00ff66" stroke="#fff" stroke-width="2"/>
-          <text x="495" y="38" fill="#00ff66" font-size="10" font-family="Chakra Petch" font-weight="800" text-anchor="end">REBUILD 44+</text>
+          <!-- Rebuild Node -->
+          <circle cx="495" cy="50" r="6" fill="#00ff66" stroke="#fff" stroke-width="2" filter="url(#neonGlow)"/>
+          <text x="495" y="36" fill="#00ff66" font-size="11" font-family="Chakra Petch" font-weight="900" text-anchor="end">GOAL 44+</text>
 
           <!-- Dates -->
-          <text x="55" y="205" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Oct '25</text>
-          <text x="175" y="205" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Nov '25</text>
-          <text x="295" y="205" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Mar '26</text>
+          <text x="55" y="205" fill="#7d8ea3" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Oct '25</text>
+          <text x="175" y="205" fill="#7d8ea3" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Nov '25</text>
+          <text x="295" y="205" fill="#7d8ea3" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Mar '26</text>
           <text x="415" y="205" fill="#ff0055" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Jun–Oct '26</text>
-          <text x="495" y="205" fill="#00ff66" font-size="9" font-family="JetBrains Mono" text-anchor="end">TARGET</text>
+          <text x="495" y="205" fill="#00ff66" font-size="9" font-family="JetBrains Mono" text-anchor="end">REBUILD</text>
         </svg>
-      </div>
-
-      <div style="font-family: var(--font-mono); font-size: 0.74rem; color: var(--neon-cyan); background: rgba(0,243,255,0.06); padding: 12px 14px; border-radius: 8px; border-left: 3px solid var(--neon-cyan); margin-top: 14px;">
-        &rarr; <strong>Key Insight:</strong> Running has been paused in recent weeks to stop catabolic muscle wasting. Rebuilding the lost 4.1 lb of leg muscle through heavy strength training directly restores cardiac stroke volume and ramps VO2 max back to 44+.
       </div>
     </section>
 
-    <!-- SECTION 4: THE INTERACTIVE REVEAL (RUB-OFF FOIL) -->
+    <!-- SECTION 3: NEON MONTHLY WORKOUT VOLUME (BARS & SPARKLINES) -->
+    <section class="hud-card" id="volume">
+      <div class="section-header">
+        <span class="section-icon">⚡</span>
+        <h2 class="section-title">2-Year Monthly Volume</h2>
+        <span class="section-pill">717 SESSIONS</span>
+      </div>
+
+      <div class="chart-box">
+        <svg viewBox="0 0 540 210" width="100%" height="auto" style="overflow: visible;">
+          <!-- Grid -->
+          <line x1="40" y1="30" x2="520" y2="30" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
+          <line x1="40" y1="80" x2="520" y2="80" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
+          <line x1="40" y1="130" x2="520" y2="130" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
+          <line x1="40" y1="175" x2="520" y2="175" stroke="rgba(255,255,255,0.1)"/>
+
+          <!-- Y-labels -->
+          <text x="35" y="34" fill="#7d8ea3" font-size="9" font-family="JetBrains Mono" text-anchor="end">300 km</text>
+          <text x="35" y="84" fill="#7d8ea3" font-size="9" font-family="JetBrains Mono" text-anchor="end">200 km</text>
+          <text x="35" y="134" fill="#7d8ea3" font-size="9" font-family="JetBrains Mono" text-anchor="end">100 km</text>
+
+          <!-- Glowing Bars -->
+          <rect x="52" y="133" width="16" height="42" fill="#00f3ff" rx="4" style="filter: drop-shadow(0 0 6px #00f3ff);"/>
+          <text x="60" y="194" fill="#7d8ea3" font-size="8" font-family="JetBrains Mono" text-anchor="middle">J '25</text>
+
+          <rect x="92" y="112" width="16" height="63" fill="#00f3ff" rx="4" style="filter: drop-shadow(0 0 6px #00f3ff);"/>
+          <rect x="110" y="156" width="10" height="19" fill="#ff0055" rx="3" style="filter: drop-shadow(0 0 6px #ff0055);"/>
+          <text x="104" y="194" fill="#7d8ea3" font-size="8" font-family="JetBrains Mono" text-anchor="middle">M</text>
+
+          <rect x="136" y="116" width="16" height="59" fill="#00f3ff" rx="4" style="filter: drop-shadow(0 0 6px #00f3ff);"/>
+          <text x="144" y="194" fill="#7d8ea3" font-size="8" font-family="JetBrains Mono" text-anchor="middle">M</text>
+
+          <rect x="176" y="12" width="18" height="163" fill="#ff0055" rx="4" style="filter: drop-shadow(0 0 10px #ff0055);"/>
+          <rect x="196" y="158" width="12" height="17" fill="#00f3ff" rx="3"/>
+          <text x="190" y="194" fill="#7d8ea3" font-size="8" font-family="JetBrains Mono" text-anchor="middle">J '25</text>
+
+          <rect x="224" y="108" width="16" height="67" fill="#00f3ff" rx="4" style="filter: drop-shadow(0 0 8px #00f3ff);"/>
+          <rect x="242" y="133" width="12" height="42" fill="#ff0055" rx="3"/>
+          <text x="236" y="194" fill="#7d8ea3" font-size="8" font-family="JetBrains Mono" text-anchor="middle">S</text>
+
+          <rect x="270" y="122" width="16" height="53" fill="#00f3ff" rx="4"/>
+          <text x="278" y="194" fill="#7d8ea3" font-size="8" font-family="JetBrains Mono" text-anchor="middle">N</text>
+
+          <rect x="314" y="148" width="16" height="27" fill="#00f3ff" rx="4"/>
+          <text x="322" y="194" fill="#7d8ea3" font-size="8" font-family="JetBrains Mono" text-anchor="middle">J '26</text>
+
+          <rect x="358" y="168" width="16" height="7" fill="#00f3ff" rx="4"/>
+          <text x="366" y="194" fill="#7d8ea3" font-size="8" font-family="JetBrains Mono" text-anchor="middle">M</text>
+
+          <rect x="402" y="62" width="18" height="113" fill="#ff0055" rx="4" style="filter: drop-shadow(0 0 8px #ff0055);"/>
+          <rect x="422" y="158" width="12" height="17" fill="#00f3ff" rx="3"/>
+          <text x="416" y="194" fill="#7d8ea3" font-size="8" font-family="JetBrains Mono" text-anchor="middle">J</text>
+
+          <rect x="450" y="165" width="16" height="10" fill="#00f3ff" rx="4"/>
+          <text x="458" y="194" fill="#7d8ea3" font-size="8" font-family="JetBrains Mono" text-anchor="middle">S</text>
+
+          <!-- October Strength Pivot (High Voltage Green) -->
+          <rect x="490" y="105" width="22" height="70" fill="#00ff66" rx="5" style="filter: drop-shadow(0 0 12px #00ff66);"/>
+          <text x="501" y="194" fill="#00ff66" font-size="8" font-family="JetBrains Mono" font-weight="800" text-anchor="middle">OCT</text>
+          <text x="501" y="96" fill="#00ff66" font-size="9" font-family="Chakra Petch" font-weight="900" text-anchor="middle">LIFT</text>
+        </svg>
+
+        <div style="display: flex; justify-content: center; gap: 20px; font-family: var(--font-mono); font-size: 0.72rem; margin-top: 10px;">
+          <div style="display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: #00f3ff; border-radius: 2px; box-shadow: 0 0 6px #00f3ff;"></span> Running (km)</div>
+          <div style="display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: #ff0055; border-radius: 2px; box-shadow: 0 0 6px #ff0055;"></span> Cycling (km)</div>
+          <div style="display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: #00ff66; border-radius: 2px; box-shadow: 0 0 8px #00ff66;"></span> Strength Pivot</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: HORIZONTAL SPARKLINES CAROUSEL (SWIPE TILES) -->
+    <section class="hud-card" id="timeline">
+      <div class="section-header">
+        <span class="section-icon">🗓️</span>
+        <h2 class="section-title">Timeline Stream</h2>
+        <span class="section-pill">SWIPE &rarr;</span>
+      </div>
+
+      <div class="carousel-track">
+        <!-- May '25 Peak -->
+        <div class="month-tile" style="border-color: var(--neon-green); background: rgba(0,255,102,0.06);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: var(--neon-green); font-family: var(--font-display);">May 2025 🏆</strong>
+            <span class="tile-badge" style="background: var(--neon-green); color: #02050e;">PEAK</span>
+          </div>
+          <svg class="tile-sparkline" viewBox="0 0 100 25">
+            <path d="M 0 20 Q 50 2 100 5" fill="none" stroke="#00ff66" stroke-width="2.5"/>
+          </svg>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: #fff;">Runs: <strong>117.5 km</strong></div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: #fff;">Lean: <strong>119.9 lb</strong></div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--neon-cyan);">VO2: <strong>46.0</strong></div>
+        </div>
+
+        <!-- Jul '25 Ride -->
+        <div class="month-tile">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: #fff; font-family: var(--font-display);">Jul 2025 🚴</strong>
+            <span class="tile-badge" style="background: rgba(255,0,85,0.2); color: var(--neon-pink);">328 KM</span>
+          </div>
+          <svg class="tile-sparkline" viewBox="0 0 100 25">
+            <path d="M 0 22 L 30 18 L 60 4 L 100 12" fill="none" stroke="#ff0055" stroke-width="2.5"/>
+          </svg>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: #fff;">Rides: <strong>328.2 km</strong></div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: #fff;">Sleep: <strong>8.8 h</strong></div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--neon-green);">RHR: <strong>61 bpm</strong></div>
+        </div>
+
+        <!-- Sep '25 Wave -->
+        <div class="month-tile">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: #fff; font-family: var(--font-display);">Sep 2025 ⚡</strong>
+            <span class="tile-badge" style="background: rgba(0,243,255,0.2); color: var(--neon-cyan);">133 KM</span>
+          </div>
+          <svg class="tile-sparkline" viewBox="0 0 100 25">
+            <path d="M 0 15 L 40 8 L 70 3 L 100 7" fill="none" stroke="#00f3ff" stroke-width="2.5"/>
+          </svg>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: #fff;">Runs: <strong>133.0 km</strong></div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: #fff;">Strength: <strong>15 sessions</strong></div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--neon-cyan);">VO2: <strong>46.3</strong></div>
+        </div>
+
+        <!-- May '26 Low -->
+        <div class="month-tile" style="border-color: var(--neon-pink); background: rgba(255,0,85,0.06);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: var(--neon-pink); font-family: var(--font-display);">May 2026 🛑</strong>
+            <span class="tile-badge" style="background: var(--neon-pink); color: #fff;">DIP</span>
+          </div>
+          <svg class="tile-sparkline" viewBox="0 0 100 25">
+            <path d="M 0 5 L 40 12 L 80 22 L 100 24" fill="none" stroke="#ff0055" stroke-width="2.5"/>
+          </svg>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--neon-pink);">Runs: <strong>0 km</strong></div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--neon-pink);">VO2: <strong>36.4</strong></div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: #fff;">RHR: <strong>69.2 bpm</strong></div>
+        </div>
+
+        <!-- Sep '26 Cut -->
+        <div class="month-tile" style="border-color: var(--neon-amber); background: rgba(255,170,0,0.06);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: var(--neon-amber); font-family: var(--font-display);">Sep 2026 ⚖️</strong>
+            <span class="tile-badge" style="background: var(--neon-amber); color: #02050e;">-7.8 LB</span>
+          </div>
+          <svg class="tile-sparkline" viewBox="0 0 100 25">
+            <path d="M 0 6 L 50 18 L 100 23" fill="none" stroke="#ffaa00" stroke-width="2.5"/>
+          </svg>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: #fff;">Scale: <strong>169.3 lb</strong></div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--neon-pink);">Lean: <strong>109.1 lb</strong></div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--neon-amber);">VAT: <strong>2.97 lb</strong></div>
+        </div>
+
+        <!-- Oct '26 Pivot -->
+        <div class="month-tile" style="border-color: var(--neon-green); background: rgba(0,255,102,0.08);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: var(--neon-green); font-family: var(--font-display);">Oct 2026 🛡️</strong>
+            <span class="tile-badge" style="background: var(--neon-green); color: #02050e;">ACTIVE</span>
+          </div>
+          <svg class="tile-sparkline" viewBox="0 0 100 25">
+            <path d="M 0 22 Q 40 8 100 3" fill="none" stroke="#00ff66" stroke-width="3"/>
+          </svg>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--neon-green);">Heavy Strength Focus</div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: #fff;">+ Ubiquinol (CoQ10)</div>
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--neon-cyan);">HA: <strong>74.3 kg</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: INTERACTIVE SCRATCH FOIL (RUB TO DE-CLOAK) -->
     <section class="hud-card" id="symptoms">
       <div class="section-header">
         <span class="section-icon">⚡</span>
         <h2 class="section-title">Molecular Decryption</h2>
-        <span class="section-pill">RUB TO DE-CLOAK</span>
+        <span class="section-pill">SWIPE CANVAS</span>
       </div>
-
-      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 10px;">
-        Why did acute lightheadedness upon standing and perceived cardiac weakness happen? <strong>Rub your finger or cursor across the sensor foil below:</strong>
-      </p>
 
       <div class="scratch-container">
         <div class="scratch-underlay">
-          <h3 style="font-family: var(--font-display); color: var(--neon-pink); font-size: 1.15rem; margin-bottom: 6px;">
-            DIAGNOSTIC MECHANISM CONFIRMED
+          <h3 style="font-family: var(--font-display); color: var(--neon-pink); font-size: 1.25rem; margin-bottom: 6px; text-shadow: 0 0 10px rgba(255,0,85,0.7);">
+            DIAGNOSTIC DE-CLOAKED
           </h3>
-          <p style="font-size: 0.82rem; color: #fff; line-height: 1.42;">
-            <strong>1. Vasodilator Stacking:</strong> Taking 4 systemic blood-vessel relaxers (Berberine, Quercetin, Resveratrol, Magnesium) caused blood to pool in the lower body when rising.<br>
-            <strong>2. Leg Muscle Pump Loss:</strong> DEXA revealed a -4.1 lb drop in leg lean mass, diminishing mechanical venous return.<br>
-            <strong>3. Statin CoQ10 Block:</strong> Daily Atorvastatin blocked HMG-CoA reductase, stripping heart mitochondria of Ubiquinol needed for cardiac ATP.
+          <p style="font-size: 0.85rem; color: #fff; line-height: 1.45;">
+            <strong>1. Vasodilator Stacking:</strong> Stacking 4 systemic blood-vessel relaxers (Berberine, Quercetin, Resveratrol, Magnesium) dropped orthostatic blood pressure.<br>
+            <strong>2. Leg Muscle Pump Loss:</strong> DEXA revealed -4.1 lb of leg muscle was stripped, killing venous return.<br>
+            <strong>3. Statin CoQ10 Block:</strong> Atorvastatin blocked HMG-CoA reductase, stripping heart mitochondria of Ubiquinol.
           </p>
         </div>
         <canvas id="scratchCanvas" class="scratch-canvas"></canvas>
-        <div class="scratch-hint">SWIPE / TOUCH TO DE-CLOAK</div>
+        <div class="scratch-hint">SWIPE / RUB TO REVEAL</div>
       </div>
     </section>
 
-    <!-- SECTION 5: DAILY INTERACTIVE PROTOCOL -->
+    <!-- SECTION 6: TACTILE ACTION PROTOCOL CHECKLIST -->
     <section class="hud-card" id="protocol">
       <div class="section-header">
         <span class="section-icon">🛡️</span>
-        <h2 class="section-title">Active Daily Protocol</h2>
-        <span class="section-pill">INTERACTIVE CHECKLIST</span>
+        <h2 class="section-title">Action Protocol</h2>
+        <span class="section-pill">INTERACTIVE</span>
       </div>
 
       <div class="checklist">
         <div class="check-item done" onclick="toggleTask(this)">
           <div class="cyber-check">&check;</div>
-          <div>
-            <div style="font-size: 0.9rem; font-weight: 700; color: #fff;">Discontinued Daytime Vasodilator Stack</div>
-            <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 2px;">Eliminated daytime blood pooling and orthostatic lightheadedness.</div>
+          <div style="font-size: 0.88rem; font-weight: 700; color: #fff;">
+            Discontinued Daytime Vasodilators (Berberine / Quercetin)
           </div>
         </div>
 
         <div class="check-item done" onclick="toggleTask(this)">
           <div class="cyber-check">&check;</div>
-          <div>
-            <div style="font-size: 0.9rem; font-weight: 700; color: #fff;">Morning Ubiquinol (CoQ10 100–200mg)</div>
-            <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 2px;">Restores myocardial mitochondrial ATP depleted by daily Atorvastatin.</div>
+          <div style="font-size: 0.88rem; font-weight: 700; color: #fff;">
+            Morning Ubiquinol (Active CoQ10 100–200mg) for Cardiac ATP
           </div>
         </div>
 
         <div class="check-item done" onclick="toggleTask(this)">
           <div class="cyber-check">&check;</div>
-          <div>
-            <div style="font-size: 0.9rem; font-weight: 700; color: #fff;">Bedtime Evalar Magnesium L-Threonate</div>
-            <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 2px;">Crosses blood-brain barrier for deep sleep architecture without daytime hypotension.</div>
+          <div style="font-size: 0.88rem; font-weight: 700; color: #fff;">
+            Bedtime Evalar Magnesium L-Threonate (Brain & Deep Sleep)
           </div>
         </div>
 
         <div class="check-item" onclick="toggleTask(this)">
           <div class="cyber-check">&check;</div>
-          <div>
-            <div style="font-size: 0.9rem; font-weight: 700; color: #fff;">Heavy Compound Lifting (Leg Hypertrophy Focus)</div>
-            <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 2px;">Rebuilding leg muscle restores venous return and torches visceral fat.</div>
+          <div style="font-size: 0.88rem; font-weight: 700; color: #fff;">
+            Heavy Compound Strength Phase (Rebuilding Leg Pump)
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Mobile Bottom Floating Navigation -->
+  <!-- Mobile Floating Navigation -->
   <nav class="bottom-bar">
     <button class="nav-btn active" onclick="jumpTo('overview')">
       <span>🌐</span>HUD
     </button>
-    <button class="nav-btn" onclick="jumpTo('timeline')">
-      <span>🗓️</span>Months
+    <button class="nav-btn" onclick="jumpTo('vo2max')">
+      <span>📉</span>VO2
     </button>
     <button class="nav-btn" onclick="jumpTo('volume')">
-      <span>📊</span>Volume
+      <span>⚡</span>Volume
     </button>
-    <button class="nav-btn" onclick="jumpTo('vo2max')">
-      <span>📉</span>VO2 Max
+    <button class="nav-btn" onclick="jumpTo('timeline')">
+      <span>🗓️</span>Months
     </button>
     <button class="nav-btn" onclick="jumpTo('symptoms')">
       <span>⚡</span>Reveal
     </button>
     <button class="nav-btn" onclick="jumpTo('protocol')">
-      <span>🛡️</span>Protocol
+      <span>🛡️</span>Action
     </button>
   </nav>
 
@@ -1071,7 +1045,7 @@
   <script>
     const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x030713, 0.04);
+    scene.fog = new THREE.FogExp2(0x02050e, 0.04);
 
     const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 16;
@@ -1090,7 +1064,7 @@
       color: 0x00f3ff,
       wireframe: true,
       transparent: true,
-      opacity: 0.32
+      opacity: 0.35
     });
     const knot = new THREE.Mesh(knotGeo, knotMat);
     group.add(knot);
@@ -1101,7 +1075,7 @@
       color: 0xff0055,
       wireframe: true,
       transparent: true,
-      opacity: 0.55
+      opacity: 0.6
     });
     const core = new THREE.Mesh(coreGeo, coreMat);
     group.add(core);
@@ -1120,7 +1094,7 @@
       color: 0x00f3ff,
       size: 0.18,
       transparent: true,
-      opacity: 0.65
+      opacity: 0.7
     });
     const embers = new THREE.Points(pGeo, pMat);
     scene.add(embers);
@@ -1220,10 +1194,10 @@
       sCtx.font = 'bold 14px "Chakra Petch", sans-serif';
       sCtx.fillStyle = '#00f3ff';
       sCtx.textAlign = 'center';
-      sCtx.fillText('// ENCRYPTED DIAGNOSTIC SENSOR FOIL //', sCanvas.width / 2, sCanvas.height / 2 - 10);
+      sCtx.fillText('// ENCRYPTED SENSOR FOIL //', sCanvas.width / 2, sCanvas.height / 2 - 10);
       sCtx.font = '11px "JetBrains Mono", monospace';
-      sCtx.fillStyle = '#94a3b8';
-      sCtx.fillText('[ SWIPE / RUB TO DE-CLOAK REVEAL ]', sCanvas.width / 2, sCanvas.height / 2 + 14);
+      sCtx.fillStyle = '#7d8ea3';
+      sCtx.fillText('[ SWIPE / RUB TO DE-CLOAK ]', sCanvas.width / 2, sCanvas.height / 2 + 14);
     }
     initScratchCanvas();
 
@@ -1235,7 +1209,7 @@
 
       sCtx.globalCompositeOperation = 'destination-out';
       sCtx.beginPath();
-      sCtx.arc(x, y, 30, 0, Math.PI * 2, false);
+      sCtx.arc(x, y, 32, 0, Math.PI * 2, false);
       sCtx.fill();
     }
 
